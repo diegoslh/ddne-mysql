@@ -88,7 +88,7 @@ PRIMARY KEY (id_tipo_insumo)
 CREATE TABLE insumo(
 id_insumo int NOT NULL AUTO_INCREMENT,
 consecutivo_insumo varchar(20) NOT NULL,
-peso_insumo decimal,
+peso_insumo decimal(6,2),
 fk_tipo_insumo int NOT NULL,
 PRIMARY KEY (id_insumo),
 FOREIGN KEY (fk_tipo_insumo) REFERENCES tipo_insumo(id_tipo_insumo)
@@ -143,8 +143,8 @@ id_tipo_medida int NOT NULL AUTO_INCREMENT,
 selec_producto varchar(45) NOT NULL,
 fk_medida_producto int NOT NULL,
 PRIMARY KEY (id_tipo_medida),
-FOREIGN KEY (fk_medida_producto) REFERENCES medidas_resmas(id_medida_resma),
-FOREIGN KEY (fk_medida_producto) REFERENCES medidas_rollos(id_medida_rollo)
+FOREIGN KEY (fk_medida_producto) REFERENCES medidas_rollos(id_medida_rollo),
+FOREIGN KEY (fk_medida_producto) REFERENCES medidas_resmas(id_medida_resma)
 );
 
 CREATE TABLE producto(
@@ -152,8 +152,8 @@ id_producto int NOT NULL AUTO_INCREMENT,
 fk_tipo_producto int NOT NULL,
 fk_estilo int NOT NULL,
 fk_tipo_medida int NOT NULL,
-peso_producto decimal,
-precio_producto decimal,
+peso_producto decimal(6,2),
+precio_producto varchar(15),
 PRIMARY KEY (id_producto),
 FOREIGN KEY (fk_tipo_producto) REFERENCES tipo_producto(id_tipo_producto),
 FOREIGN KEY (fk_estilo) REFERENCES estilos(id_estilo),
@@ -164,7 +164,7 @@ CREATE TABLE inventario_produccion(
 id_produccion INT NOT NULL AUTO_INCREMENT,
 fk_producto int NOT NULL,
 unidades int NOT NULL,
-parafina_consumida decimal NOT NULL,
+parafina_consumida decimal(6,2) NOT NULL,
 fecha_registro date NOT NULL,
 fk_usuario int NOT NULL,
 estado_registro TINYINT NOT NULL,
@@ -192,7 +192,7 @@ fk_tipo_documento  int NOT NULL,
 fk_articulo int NOT NULL,
 fk_persona int NOT NULL, -- Cliente o Proveedor
 fecha_registro date NOT NULL,
-precio decimal NOT NULL,
+precio varchar(15) NOT NULL,
 comprobante varchar(250) NOT NULL, -- La idea seria guardar el enlace de la ruta, donde se vaya a guardar el documento para no llenar la BD con ese tipo de archivos
 PRIMARY KEY (id_transacciones),
 FOREIGN KEY (fk_tipo_transaccion) REFERENCES tipo_transaccion(id_tipo_transaccion),
