@@ -143,12 +143,6 @@ VALUES
 	("Cuadro", "Negro"), -- 3 
 	("Custom", "Hamburguesa"); -- 4
 
--- M. Resmas
-INSERT INTO medidas_resmas(medida_1, medida_2, medida_3) 
-VALUES 
-	("30", "30", "100"), -- 1
-	("30", "40", "80"); -- 2
-
 -- M. Rollos
 INSERT INTO medidas_rollos(medida) 
 VALUES 
@@ -159,43 +153,43 @@ VALUES
 	("300"), -- 5
 	("500"); -- 6
 
+-- M. Resmas
+INSERT INTO medidas_resmas(medida_1, medida_2, medida_3) 
+VALUES 
+	("30", "30", "100"), -- 1
+	("30", "40", "80"); -- 2
+
 -- T. Medidas
 INSERT INTO tipo_medidas(selec_producto,fk_medida_producto) 
 VALUES 
 	("Resma", "1"), -- 1
 	("Resma", "2"), -- 2
-
-	("Rollo", "1"), -- 3 
-	("Rollo", "2"), -- 4
-	("Rollo", "3"), -- 5
-	("Rollo", "4"), -- 6
-	("Rollo", "5"), -- 7 
-	("Rollo", "6"); -- 8 
+ 	("Rollo", "1"), -- 3 
+ 	("Rollo", "2"); -- 4
 
 -- Producto 
 INSERT INTO producto(fk_tipo_producto, fk_estilo, fk_tipo_medida, peso_producto, precio_producto) 
 VALUES 
 -- Jumbo
-	("1", "1", "8", "80.3","215.000"), -- 1
+--  ("1", "1", "8", "80.3","215.000"), 
 -- Rollitos
-	("2", "2", "3", "20", "90.000"), -- 2
-	("2", "3", "4", "30", "100.000"), -- 3
-	("2", "4", "5", "40", "110.000"), -- 4
-	("2", "1", "6", "50", "130.000"), -- 5
+	("2", "2", "3", "20", "90.000"), -- 1
+	("2", "3", "4", "30", "100.000"), -- 2
+-- 	("2", "4", "5", "40", "110.000"), 
+-- 	("2", "1", "6", "50", "130.000"), 
 -- Resmas
-	("3", "4", "1", "7.5", "60.000"), -- 6
-	("3", "2", "2", "8", "85.000"); -- 7
+	("3", "4", "1", "7.5", "60.000"), -- 3
+	("3", "2", "2", "8", "85.000"); -- 4
 
 -- I. Produccion
 INSERT INTO inventario_produccion(fk_producto, unidades, parafina_consumida, fecha_registro, fk_usuario, estado_registro) 
 VALUES -- Evaluar si los registros los puede realizar el operario
-	("1", "3", "10.5", now(),"3","1"),
-	("2", "2", "7.8", now(), "3","1"),
-	("3", "3", "12", now(), "3", "2"),
-	("4", "1", "11", now(), "3", "1"),
-	("5", "1", "11.5", now(), "3", "2"),
-	("6", "9", "22.3", now(), "3", "1"),
-	("7", "4", "12", now(), "3", "1");
+	("1", "3", "10.5", curdate(),"3","1"),
+	("2", "2", "7.8", curdate(), "3","1"),
+	("2", "3", "12", curdate(), "3", "2"),
+	("1", "1", "5.6", curdate(), "3", "1"),
+	("3", "9", "22.3", curdate(), "3", "1"),
+	("4", "4", "12", curdate(), "3", "1");
 
 -- T. Documento
 INSERT INTO tipo_documento(documento_transaccion) 
@@ -213,6 +207,9 @@ VALUES
 INSERT INTO transacciones(fk_tipo_transaccion, fk_tipo_documento, fk_articulo, fk_persona, fecha_registro, precio, comprobante) 
 VALUES -- de pronto no deja crear el registro por el not null de artículo
 -- Compras
-	("1", "1", null, "4", now(), "1'112.050", "https://www.tuaplicacionweb.com/images/ejemplo.jpg"),
+	("1", "1", "1", "4", curdate(), "1.112.050", "https://www.tuaplicacionweb.com/images/ejemplo.jpg"),
+    ("1", "2", "1", "4", curdate(), "1.112.050", "https://www.tuaplicacionweb.com/images/ejemplo.jpg"),
+    ("1", "1", "3", "4", curdate(), "112.050", "https://www.tuaplicacionweb.com/images/ejemplo.jpg"),
 -- Ventas
-	("2", "2", null, "7", now(), "623.200", "https://www.tuaplicacionweb.com/docs/ejemplo.pdf");
+	("2", "2", "2", "7", curdate(), "623.200", "https://www.tuaplicacionweb.com/docs/ejemplo.pdf"),
+    ("2", "1", "2", "7", curdate(), "623.200", "https://www.tuaplicacionweb.com/docs/ejemplo.pdf");
