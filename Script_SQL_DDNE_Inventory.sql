@@ -124,28 +124,27 @@ figura_color varchar(70) NOT NULL,
 PRIMARY KEY (id_estilo)
 );
 
-CREATE TABLE tipo_medidas(
-id_tipo_medida int NOT NULL AUTO_INCREMENT,
-medida_producto varchar(45) NOT NULL,
-PRIMARY KEY (id_tipo_medida)
-);
-
 CREATE TABLE medidas_resmas(
 id_medida_resma int NOT NULL AUTO_INCREMENT,
 medida_1 VARCHAR(3) NOT NULL,	
 medida_2 VARCHAR(3) NOT NULL,
 medida_3 VARCHAR(3) NOT NULL,
-fk_tipo_medida int NOT NULL,
-PRIMARY KEY (id_medida_resma),
-FOREIGN KEY (fk_tipo_medida) REFERENCES tipo_medidas(id_tipo_medida)
+PRIMARY KEY (id_medida_resma)
 );
 
 CREATE TABLE medidas_rollos(
 id_medida_rollo int NOT NULL AUTO_INCREMENT,
 medida varchar(3) NOT NULL,
-fk_tipo_medida int NOT NULL,
-PRIMARY KEY (id_medida_rollo),
-FOREIGN KEY (fk_tipo_medida) REFERENCES tipo_medidas(id_tipo_medida)
+PRIMARY KEY (id_medida_rollo)
+);
+
+CREATE TABLE tipo_medidas(
+id_tipo_medida int NOT NULL AUTO_INCREMENT,
+selec_producto varchar(45) NOT NULL,
+fk_medida_producto int NOT NULL,
+PRIMARY KEY (id_tipo_medida),
+FOREIGN KEY (fk_medida_producto) REFERENCES medidas_resmas(id_medida_resma),
+FOREIGN KEY (fk_medida_producto) REFERENCES medidas_rollos(id_medida_rollo)
 );
 
 CREATE TABLE producto(
