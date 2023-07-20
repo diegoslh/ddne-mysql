@@ -88,7 +88,7 @@ PRIMARY KEY (id_tipo_insumo)
 CREATE TABLE insumo(
 id_insumo int NOT NULL AUTO_INCREMENT,
 consecutivo_insumo varchar(20) NOT NULL,
-peso_insumo decimal ,
+peso_insumo decimal,
 fk_tipo_insumo int NOT NULL,
 PRIMARY KEY (id_insumo),
 FOREIGN KEY (fk_tipo_insumo) REFERENCES tipo_insumo(id_tipo_insumo)
