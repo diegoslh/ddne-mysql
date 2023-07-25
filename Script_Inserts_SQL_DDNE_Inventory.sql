@@ -60,11 +60,11 @@ VALUES
     ("3", "7", "8");
     
 -- Usuarios
-INSERT INTO usuarios(alias, fk_empleado, estado_usuario) 
+INSERT INTO usuarios(alias, contraseña, fk_empleado, estado_usuario) 
 VALUES 
-	("Contabilidad", "1", "1"), -- 1
-	("Operario", "2", "1"), -- 2
-    ("Jefe de Operaciones", "9", "1"); -- 3
+	("Contabilidad", "C0nt4", "1", "1"), -- 1
+	("Operario", "O123", "2", "1"), -- 2
+    ("Jefe de Operaciones", "J123O456", "9", "1"); -- 3
 
 -- Permisos
 INSERT INTO permisos(permiso_sistema)
@@ -213,3 +213,4 @@ VALUES -- de pronto no deja crear el registro por el not null de artículo
 -- Ventas
 	("2", "2", "2", "7", curdate(), "623.200", "https://www.tuaplicacionweb.com/docs/ejemplo.pdf"),
     ("2", "1", "2", "7", curdate(), "623.200", "https://www.tuaplicacionweb.com/docs/ejemplo.pdf");
+
