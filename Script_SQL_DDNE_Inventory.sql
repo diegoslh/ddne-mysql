@@ -52,7 +52,7 @@ FOREIGN KEY (fk_datos_persona) REFERENCES datos_persona(id_datos_persona)
 CREATE TABLE usuarios(
 id_usuario int NOT NULL AUTO_INCREMENT,
 alias varchar(45) NOT NULL,
-contraseña varchar(10) NOT NULL,
+contraseña blob NOT NULL,
 fk_empleado int NOT NULL,
 estado_usuario TINYINT NOT NULL,
 PRIMARY KEY (id_usuario),

@@ -1,4 +1,5 @@
 
+-- --------------------------------------------------------------------------------------------------------------------------------
 -- DATOS DE PRUEBA - DATA BASE DDNE INVENTORY ------------------------------------------------------->
 
 -- Tipo de Identificación 
@@ -62,9 +63,10 @@ VALUES
 -- Usuarios
 INSERT INTO usuarios(alias, contraseña, fk_empleado, estado_usuario) 
 VALUES 
-	("Contabilidad", "C0nt4", "1", "1"), -- 1
-	("Operario", "O123", "2", "1"), -- 2
-    ("Jefe de Operaciones", "J123O456", "9", "1"); -- 3
+-- Encriptar Contraseña
+	("Contabilidad", aes_encrypt("C0nt4", 'user1'), "1", "1"), -- 1
+	("Operario", aes_encrypt("O123", 'user2') , "2", "1"), -- 2
+    ("Jefe de Operaciones", aes_encrypt("J123O456",'user3'), "9", "1"); -- 3
 
 -- Permisos
 INSERT INTO permisos(permiso_sistema)

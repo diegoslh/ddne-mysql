@@ -1,12 +1,14 @@
 
 -- --------------------------------------------------------------------------------------------------------------------------------
+-- Consultas de Tablas
+--                                                 --------------------------------------------------------------------------------
 
--- Table Selects
-show tables;
+SHOW TABLES;
+-- /////////////////////////////////////////////////////////////////
 
 	-- Entidades Fuertes --
 -- ----------------------------------------------------------------
---                                               Consultas   -----
+--                                        Consultas Simples  -----
 --                                    -----------------------------
 SELECT * FROM tipo_documento;
 SELECT * FROM tipo_transaccion;
@@ -37,13 +39,16 @@ LEFT JOIN tipo_identificacion ti ON fk_tipo_identificacion = id_tipo_id;
 -- ----------------------------
 SELECT * FROM usuarios;
 
-SELECT u.id_usuario, u. alias, -- usuarios
+SELECT u.id_usuario, u. alias, u.contraseña, -- usuarios
 		dp.persona_id, dp.nombre_1, dp.apellido_1, dp.correo, -- datos persona
         u.estado_usuario -- usuarios
 FROM usuarios u
 LEFT JOIN personas p ON fk_empleado = id_persona
 LEFT JOIN datos_persona dp ON fk_empleado = id_datos_persona;
 
+-- Desencriptar contraseña
+select u.alias, convert(aes_decrypt(contraseña, 'user3') using utf8mb3) as dato_desencriptado 
+from usuarios u;
 -- ----------------------------
 SELECT * FROM insumo;
 
