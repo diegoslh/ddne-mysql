@@ -5,130 +5,130 @@
 -- Tipo de Identificación 
 INSERT INTO tipo_identificacion(nombre_identificacion)
 VALUES  
-    ("C.C"), -- 1
-	("C.E"), -- 2
-    ("Otro"); -- 3
-            
--- Datos Persona 
-INSERT INTO datos_persona(persona_id, fk_tipo_identificacion, nombre_1, nombre_2, apellido_1, apellido_2, telefono, direccion, correo) 
-VALUES 
--- Empleados
-	("20654865", "1", "Jorge", "Sebastian", "Mosquera", "Ballen", "3128549685", "Cll 82 # 20a - 12", "jsmosquera@gmail.com"), -- 1
-	("1007393654", "1", "Nelson", "Javier", "Varela", "Hortua", "3114568532", "Cr 68 # 17 - 23", "njvarela@gmail.com"), -- 2
--- Proveedores
-	("52965785", "2", "Vikram", null, "Watson", null, "6482085", "Cll 120 # 7b - 6", "vikram12@gmail.com"), -- 3
-	("1032458967", "1", "Camila", null, "Delgado", "Perez", "3224568512", "Cll 6d # 72a - 85", "camidp@outlook.com"), -- 4
-	("45965784", "1", "Juan", "Camilo", "Anzola", "Estrada", "3054218576", "Cr 92b # 11a - 20", "janzola@gmail.com"), -- 5
--- Clientes	
-	("103045685", "1", "Jaime", "Miguel", "Orjuela", "Puente", "3226548567", "Cll 102 # 19 - 11", "jmiguelo@hotmail.com"), -- 6
-    ("204596855", "1", "Julio", null, "Munevar", "Ortiz", "3012228547", "Av 19 # 109 - 02", "jmunevaro@outlook.com"), -- 7
-    ("635847596", "2", "Claudio", "Manuel", "Cierafi", "Parrado", "314856932", "Cr 112 # 22sur - 17", "cmanuelc@gmail.com"), -- 8
--- Empleado Extra
-	("48456325", "1", "Cristian", null, "Moreno", "García", "3008573695", "Cll 12 # 64 - 09", "cristianmg@gmail.com"); -- 9
+    ("ID01", "C.C"), -- 1
+	("ID02", "C.E"), -- 2
+    ("ID03", "Otro"); -- 3
 
 -- Tipo Persona 
-INSERT INTO tipo_persona(persona) 
+INSERT INTO tipo_persona(id_tpersona, persona) 
 VALUES 
-	("Empleado"), -- 1
-	("Proveedor"), -- 2
-    ("Cliente"); -- 3
-	
+	("TP01", "Empleado"), 
+	("TP02", "Proveedor"), 
+    ("TP03", "Cliente"); 
+
+-- Datos Persona 
+INSERT INTO datos_persona(persona_id, fk_tipo_identificacion, nombre_1, nombre_2, apellido_1, apellido_2, telefono, direccion, correo,fk_tipo_persona) 
+VALUES 
+-- Empleados
+	("20654865", "ID01", "Jorge", "Sebastian", "Mosquera", "Ballen", "3128549685", "Cll 82 # 20a - 12", "jsmosquera@gmail.com", "TP01"), -- 1
+	("1007393654", "ID01", "Nelson", "Javier", "Varela", "Hortua", "3114568532", "Cr 68 # 17 - 23", "njvarela@gmail.com", "TP01"), -- 2
+	("48456325", "ID01", "Cristian", null, "Moreno", "García", "3008573695", "Cll 12 # 64 - 09", "cristianmg@gmail.com", "TP01"), -- 3
+-- Proveedores
+	("52965785", "ID02", "Vikram", null, "Watson", null, "6482085", "Cll 120 # 7b - 6", "vikram12@gmail.com", "TP02"), -- 4
+	("1032458967", "ID01", "Camila", null, "Delgado", "Perez", "3224568512", "Cll 6d # 72a - 85", "camidp@outlook.com", "TP02"), -- 5
+	("45965784", "ID01", "Juan", "Camilo", "Anzola", "Estrada", "3054218576", "Cr 92b # 11a - 20", "janzola@gmail.com", "TP02"), -- 6
+-- Clientes	
+	("103045685", "ID01", "Jaime", "Miguel", "Orjuela", "Puente", "3226548567", "Cll 102 # 19 - 11", "jmiguelo@hotmail.com", "TP03"), -- 7
+    ("204596855", "ID01", "Julio", null, "Munevar", "Ortiz", "3012228547", "Av 19 # 109 - 02", "jmunevaro@outlook.com", "TP03"), -- 8
+    ("635847596", "ID02", "Claudio", "Manuel", "Cierafi", "Parrado", "314856932", "Cr 112 # 22sur - 17", "cmanuelc@gmail.com", "TP03"); -- 9
+
+
 -- Empresas
-INSERT INTO empresas(NIT, nombre_empresa, descripcion_empresa) 
+INSERT INTO empresas(id_empresa, NIT, nombre_empresa, descripcion_empresa) 
 VALUES 
-	("Default", "Default", "No registra"), -- 1
-	("80234698-4", "Solla S.A.S", "Proveedor de Parafina"), -- 2
-	("10122012334-5", "Carvajal S.A.S", "Proveedor de Papel"), -- 3
-    ("8088754621-3", "Propandina S.A.S", "Proveedor de Papel"), -- 4
-	("80234698-4", "Bogga Waffles", "Empresa Cliente"), -- 5
-    ("2684596-2", "Restaurante El Ajillo", "Empresa Cliente"), -- 6
-    ("90995264-5", "La Salchipaperia", "Empresa Cliente"); -- 7
-    
--- Personas
-INSERT INTO personas(fk_tipo_persona, fk_empresa, fk_datos_persona) 
+	("E001", "Default", "Default", "No registra"), -- 1
+	-- E. Proveedores
+	("E002", "80234698-4", "Solla S.A.S", "Proveedor de Parafina"), -- 2
+	("E003", "10122012334-5", "Carvajal S.A.S", "Proveedor de Papel"), -- 3
+    ("E004", "8088754621-3", "Propandina S.A.S", "Proveedor de Papel"), -- 4
+	-- E. Clientes
+	("E005", "80234698-4", "Bogga Waffles", "Empresa Cliente"), -- 5
+    ("E006", "2684596-2", "Restaurante El Ajillo", "Empresa Cliente"), -- 6
+    ("E007", "90995264-5", "La Salchipaperia", "Empresa Cliente"); -- 7
+
+-- Proveedores
+INSERT INTO proveedores(fk_id_proveedor, fk_ti_proveedor, fk_empresa)  
 VALUES
--- Empleados 
-	("1", "1", "1"),
-    ("1", "1", "2"),
-	("1", "1", "9"),
--- Proveedores    
-	("2", "2", "3"), -- Parafina
-	("2", "3", "4"), -- Papel
-    ("2", "4", "5"), -- Papel
--- Clientes
-	("3", "5", "6"),
-    ("3", "6", "7"),
-    ("3", "7", "8");
-    
+	("52965785", "ID02","E002"),
+	("1032458967", "ID01","E003"),
+	("45965784", "ID01","E004");
+
+--Clientes
+INSERT INTO clientes(fk_id_cliente, fk_ti_cliente, fk_empresa)
+VALUES
+	("103045685", "ID01", "E005"),
+    ("204596855", "ID01", "E006"),
+    ("635847596", "ID02", "E007");
+
 -- Usuarios
-INSERT INTO usuarios(alias, contraseña, fk_empleado, estado_usuario) 
+INSERT INTO usuarios(id_usuario, alias, contraseña, fk_id_empleado, fk_ti_empleado, estado_usuario) 
 VALUES 
 -- Encriptar Contraseña
-	("Contabilidad", aes_encrypt("C0nt4", 'user1'), "1", "1"), -- 1
-	("Operario", aes_encrypt("O123", 'user2') , "2", "1"), -- 2
-    ("Jefe de Operaciones", aes_encrypt("J123O456",'user3'), "9", "1"); -- 3
+	("U001", "Contabilidad", aes_encrypt("C0nt4", 'user1'), "20654865", "ID01"),
+	("U002", "Operario", aes_encrypt("O123", 'user2') , "1007393654", "ID01"),
+    ("U003", "Jefe de Operaciones", aes_encrypt("J123O456",'user3'), "48456325", "ID01");
 
 -- Permisos
-INSERT INTO permisos(permiso_sistema)
+INSERT INTO permisos(id_permiso, permiso_sistema)
 VALUES 
-	("Control de Existencias"), -- 1
-	("Inventario"), -- 2
-	("Informe de Inventario"), -- 3
-	("Contabilidad"), -- 4
-	("Proveedores"), -- 5
-	("Clientes"), -- 6
-	("Usuarios"); -- 7
+	("P001", "Control de Existencias"),
+	("P002", "Inventario"),
+	("P003", "Informe de Inventario"),
+	("P004", "Contabilidad"),
+	("P005", "Proveedores"),
+	("P006", "Clientes"),
+	("P007", "Usuarios");
 
 -- Usuario-Permiso
 INSERT INTO usuario_permiso(fk_usuario, fk_permiso) 
 VALUES 
 -- Contabilidad
-	("1", "3"),
-	("1", "4"),
-	("1", "5"),
-	("1", "6"),
+	("U001", "P003"),
+	("U001", "P004"),
+	("U001", "P005"),
+	("U001", "P006"),
 -- Operario	
-	("2", "1"), 
+	("U002", "P001"), 
 -- Jefe de Operaciones
-	("3", "1"), 
-	("3", "2"),
-	("3", "7");
+	("U003", "P001"), 
+	("U003", "P002"),
+	("U003", "P007");
 
 -- Estado
-INSERT INTO estado(tipo_estado) 
+INSERT INTO estado(id_estado, tipo_estado) 
 VALUES 
-	("En Espera"), -- 1
-	("Recibido"), -- 2
-	("Cancelado"); -- 3
+	("ES01", "En Espera"), 
+	("ES02", "Recibido"), 
+	("ES03", "Cancelado"); 
 
 -- Tipo Insumo
-INSERT INTO tipo_insumo(nombre_insumo) 
+INSERT INTO tipo_insumo(id_tipo_insumo, nombre_insumo) 
 VALUES 
- ("Parafina"), -- 1
- ("Papel"), -- 2
- ("Rollo Carton"); -- 3
+	("TI01", "Parafina"), 
+	("TI02", "Papel"), 
+	("TI03", "Rollo Carton"); 
 
--- Insumo 
-INSERT INTO insumo(consecutivo_insumo, peso_insumo, fk_tipo_insumo) 
+-- Insumo  // EVALUAR SI VALE LA PENA MANTENER ESTA TABLA O INTEGRAR ESTOS DATOS AL INVENTARIO DE INSUMOS DEBIDO A QUE SE CREAN MUCHOS REGISTROS Y A LA VEZ ESOS MISMOS REGISTROS SE TRASLADAN AL INVENTARIO
+INSERT INTO insumos(consecutivo_insumo, peso_insumo, fk_tipo_insumo) 
 VALUES 
--- Papel
-	("PP3A0231046140", 215, "2"), -- 1
-	("PP3A0231049587", 210.5 , "2"), -- 2
 -- Parafina	
-	("No Registra", 25, "1"), -- 3
+	("No Registra", 25, "TI01"), -- 1
 -- Rollo Carton	
-	("No Registra", 40, "3"); -- 4
+	("No Registra", 40, "TI03"); -- 2
+-- Papel
+	("PP3A0231046140", 215, "TI02"), -- 3
+	("PP3A0231049587", 210.5 , "TI02"), -- 4
 
 -- I. Insumos
-INSERT INTO inventario_insumos (fk_insumo, fk_estado, unidades, fecha_planificada, fecha_registro, fk_usuario, fk_proveedor, estado_registro) 
+INSERT INTO inventario_insumos (fk_insumo, fk_estado, unidades, fecha_planificada, fecha_registro, fk_proveedor, fk_ti_proveedor, fk_usuario, estado_registro) 
 VALUES 
 -- Papel
-	("1", "1", "2", "2023-10-07", now(), "3", "5", "1"),
-	("2", "2", "1", "2023-04-12", "2023-04-01", "1", "6", "1"),
+	("1", "ES01", "2", "2023-12-07", now(), "3", "5", "1"),
+	("2", "ES02", "1", "2023-04-12", "2023-04-01", "1", "6", "1"),
 -- Parafina
-	("3", "2", "10","2023-03-20","2023-03-08", "1", "4","1"),
+	("3", "ES02", "10","2023-03-20","2023-03-08", "1", "4","1"),
 -- Rollo Carton
-	("4", "3", "20", "2019-01-01","2018-12-27","3","6", "0");
+	("4", "ES03", "20", "2019-01-01","2018-12-27","3","6", "0");
 
 -- T. Producto
 INSERT INTO tipo_producto(tipo_producto) 
