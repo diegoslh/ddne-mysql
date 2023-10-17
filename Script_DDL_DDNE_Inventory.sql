@@ -11,20 +11,20 @@ CREATE TABLE tipo_identificacion(
 
 CREATE TABLE tipo_persona(
     id_tpersona VARCHAR(4) NOT NULL,
-    persona VARCHAR(15) NOT NULL,
+    persona VARCHAR(11) NOT NULL, -- proveedor
     PRIMARY KEY(id_tpersona)
 );
 
 CREATE TABLE datos_persona(
     persona_id VARCHAR(15) NOT NULL,
     fk_tipo_identificacion varchar(4) NOT NULL,
-    nombre_1 varchar(45) NOT NULL,
-    nombre_2 varchar(45),
-    apellido_1 varchar(45) NOT NULL,
-    apellido_2 varchar(45),
-    telefono varchar(20) NOT NULL,
-    direccion varchar(250) NOT NULL,
-    correo varchar(100) NOT NULL,
+    nombre_1 varchar(25) NOT NULL,
+    nombre_2 varchar(25),
+    apellido_1 varchar(25) NOT NULL,
+    apellido_2 varchar(25),
+    telefono varchar(15) NOT NULL,
+    direccion varchar(65) NOT NULL, -- transversal 112B norte # 202A - 90 int 20 apto 1104 (51)
+    correo varchar(70) NOT NULL, -- diego_sebastian_ladino_hernandez@correo.udistrital.edu.co (57)
     fk_tipo_persona VARCHAR(5) NOT NULL,
     PRIMARY KEY(persona_id, fk_tipo_identificacion), -- Esta tabla tiene una llave primaria compuesta
     FOREIGN KEY (fk_tipo_identificacion) REFERENCES tipo_identificacion(id_tipo_id),
@@ -33,9 +33,9 @@ CREATE TABLE datos_persona(
 
 CREATE TABLE empresas(
     id_empresa varchar(4) NOT NULL,
-    NIT varchar(20) NOT NULL,
-    nombre_empresa varchar(100) NOT NULL,
-    descripcion_empresa varchar(250),
+    NIT varchar(20) NOT NULL, -- 20 digitos dependiendo de la generacion de la cedula
+    nombre_empresa varchar(90) NOT NULL,
+    descripcion_empresa varchar(100), -- comercializadora de papel parafinado y de cocina (48)
     primary key (id_empresa)
 );
 
@@ -45,7 +45,7 @@ CREATE TABLE proveedores(
     fk_ti_proveedor varchar(4) NOT NULL,
     fk_empresa VARCHAR(4) NOT NULL,
     PRIMARY KEY (fk_ti_proveedor, fk_id_proveedor),
-    FOREIGN KEY (fk_ti_proveedor, fk_id_proveedor) REFERENCES datos_persona(persona_id, fk_tipo_identificacion),
+    FOREIGN KEY (fk_id_proveedor, fk_ti_proveedor) REFERENCES datos_persona(persona_id, fk_tipo_identificacion),
     FOREIGN KEY (fk_empresa) REFERENCES empresas(id_empresa)
 );
 
@@ -55,19 +55,19 @@ CREATE TABLE clientes(
     fk_ti_cliente varchar(4) NOT NULL,
     fk_empresa VARCHAR(4) NOT NULL,
     PRIMARY KEY (fk_ti_cliente, fk_id_cliente),
-    FOREIGN KEY (fk_ti_cliente, fk_id_cliente) REFERENCES datos_persona(persona_id, fk_tipo_identificacion),
+    FOREIGN KEY (fk_id_cliente, fk_ti_cliente) REFERENCES datos_persona(persona_id, fk_tipo_identificacion),
     FOREIGN KEY (fk_empresa) REFERENCES empresas(id_empresa)
 );
 
 CREATE TABLE usuarios(
     id_usuario varchar(5) NOT NULL,
-    alias varchar(45) NOT NULL,
+    alias varchar(25) NOT NULL, -- jefe de operaciones (19)
     contraseña blob NOT NULL,
     fk_id_empleado varchar(15) NOT NULL,
     fk_ti_empleado varchar(4) NOT NULL,
     estado_usuario TINYINT NOT NULL,
     PRIMARY KEY (id_usuario),
-    FOREIGN KEY (fk_ti_empleado, fk_empleado) REFERENCES datos_persona(persona_id, fk_tipo_identificacion)
+    FOREIGN KEY ( fk_id_empleado, fk_ti_empleado) REFERENCES datos_persona(persona_id, fk_tipo_identificacion)
 );
 
 CREATE TABLE permisos(
@@ -87,19 +87,19 @@ CREATE TABLE usuario_permiso(
 
 CREATE TABLE estado(
     id_estado varchar(5) NOT NULL,
-    tipo_estado varchar(45) NOT NULL, 
+    tipo_estado varchar(12) NOT NULL, -- En Espera(9)
     PRIMARY KEY (id_estado)
 );
 
 CREATE TABLE tipo_insumo(
     id_tipo_insumo varchar(5) NOT NULL,
-    nombre_insumo varchar(45) NOT NULL,
+    nombre_insumo varchar(20) NOT NULL, -- Rollo Carton
     PRIMARY KEY (id_tipo_insumo)
 );
 
 CREATE TABLE insumos(
     id_insumo int NOT NULL AUTO_INCREMENT,
-    consecutivo_insumo varchar(20) NOT NULL,
+    consecutivo_insumo varchar(20) NOT NULL,-- PP3A0231046140(14)
     peso_insumo decimal(6,2),
     fk_tipo_insumo varchar(5) NOT NULL,
     PRIMARY KEY (id_insumo),
@@ -126,14 +126,14 @@ CREATE TABLE inventario_insumos(
 
 CREATE TABLE tipo_producto(
     id_tipo_producto varchar(5) NOT NULL,
-    tipo_producto varchar(45) NOT NULL,
+    tipo_producto varchar(17) NOT NULL, -- Rollo Jumbo(11)
     PRIMARY KEY(id_tipo_producto)
 );
 
 CREATE TABLE estilos(
     id_estilo varchar(5) NOT NULL,
-    tipo_estilo varchar(70) NOT NULL,
-    figura_color varchar(70) NOT NULL,
+    tipo_estilo varchar(12) NOT NULL, -- cuadro o custom (6)
+    figura_color varchar(17) NOT NULL, -- Hamburguesa(11)
     PRIMARY KEY (id_estilo)
 );
 
@@ -145,13 +145,13 @@ CREATE TABLE medida_producto(
     PRIMARY KEY (id_medida)
 );
 
-CREATE TABLE productos( -- verificar si la tabla, va a generar demasiados registros ó si son contables para determinar un PK varchar(5)
+CREATE TABLE productos( -- verificar si la tabla va a generar demasiados registros ó si son contables para determinar un PK varchar(5)
     id_producto int NOT NULL AUTO_INCREMENT,
     fk_tipo_producto varchar(5) NOT NULL,
     fk_estilo varchar(5) NOT NULL,
     fk_medida_producto varchar(5) NOT NULL,
     peso_producto decimal(6,2),
-    precio_producto varchar(15),
+    precio_producto varchar(15), -- 10.200.200 (10)
     PRIMARY KEY (id_producto),
     FOREIGN KEY (fk_tipo_producto) REFERENCES tipo_producto(id_tipo_producto),
     FOREIGN KEY (fk_estilo) REFERENCES estilos(id_estilo),
@@ -173,13 +173,13 @@ CREATE TABLE inventario_produccion(
 
 CREATE TABLE tipo_documento(
     id_tipo_documento varchar(5) NOT NULL,
-    documento_transaccion varchar(45) NOT NULL UNIQUE,
+    documento_transaccion varchar(15) NOT NULL UNIQUE, -- Remisión(8)
     PRIMARY KEY (id_tipo_documento)
 ); 
 
 CREATE TABLE tipo_transaccion(
     id_tipo_transaccion varchar(5) NOT NULL,
-    transaccion varchar(45) NOT NULL UNIQUE,
+    transaccion varchar(10) NOT NULL UNIQUE, -- venta (5)
     PRIMARY KEY (id_tipo_transaccion)
 );
 
@@ -189,10 +189,10 @@ CREATE TABLE transacciones(
     fk_tipo_documento  varchar(5) NOT NULL,
     fk_articulo int NOT NULL,
     fk_t_identi varchar(4) NOT NULL, 
-    fk_persona varchar(15) NOT NULL, -- Cliente o Proveedor
+    fk_persona varchar(13) NOT NULL, -- Cliente o Proveedor(9)
     fecha_registro date NOT NULL,
     precio varchar(15) NOT NULL,
-    comprobante varchar(250) NOT NULL, -- La idea seria guardar el enlace de la ruta, donde se vaya a guardar el documento para no llenar la BD con ese tipo de archivos
+    comprobante varchar(150) NOT NULL, -- La idea seria guardar el enlace de la ruta, donde se vaya a guardar el documento para no llenar la BD con ese tipo de archivos
     PRIMARY KEY (id_transacciones),
     FOREIGN KEY (fk_tipo_transaccion) REFERENCES tipo_transaccion(id_tipo_transaccion),
     FOREIGN KEY (fk_tipo_documento) REFERENCES tipo_documento(id_tipo_documento),

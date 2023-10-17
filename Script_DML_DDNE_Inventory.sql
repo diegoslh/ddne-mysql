@@ -3,11 +3,11 @@
 -- DATOS DE PRUEBA - DATA BASE DDNE INVENTORY ------------------------------------------------------->
 
 -- Tipo de Identificación 
-INSERT INTO tipo_identificacion(nombre_identificacion)
+INSERT INTO tipo_identificacion(id_tipo_id, nombre_identificacion)
 VALUES  
-    ("ID01", "C.C"), -- 1
-	("ID02", "C.E"), -- 2
-    ("ID03", "Otro"); -- 3
+    ("ID01", "C.C"), 
+	("ID02", "C.E"), 
+    ("ID03", "Otro"); 
 
 -- Tipo Persona 
 INSERT INTO tipo_persona(id_tpersona, persona) 
@@ -36,37 +36,40 @@ VALUES
 -- Empresas
 INSERT INTO empresas(id_empresa, NIT, nombre_empresa, descripcion_empresa) 
 VALUES 
-	("E001", "Default", "Default", "No registra"), -- 1
+	("E001", "Default", "Default", "No registra"), 
 	-- E. Proveedores
-	("E002", "80234698-4", "Solla S.A.S", "Proveedor de Parafina"), -- 2
-	("E003", "10122012334-5", "Carvajal S.A.S", "Proveedor de Papel"), -- 3
-    ("E004", "8088754621-3", "Propandina S.A.S", "Proveedor de Papel"), -- 4
+	("E002", "80234698-4", "Solla S.A.S", "Proveedor de Parafina"), 
+	("E003", "10122012334-5", "Carvajal S.A.S", "Proveedor de Papel"), 
+    ("E004", "8088754621-3", "Propandina S.A.S", "Proveedor de Papel"), 
 	-- E. Clientes
-	("E005", "80234698-4", "Bogga Waffles", "Empresa Cliente"), -- 5
-    ("E006", "2684596-2", "Restaurante El Ajillo", "Empresa Cliente"), -- 6
-    ("E007", "90995264-5", "La Salchipaperia", "Empresa Cliente"); -- 7
+	("E005", "80234698-4", "Bogga Waffles", "Empresa Cliente"), 
+    ("E006", "2684596-2", "Restaurante El Ajillo", "Empresa Cliente"), 
+    ("E007", "90995264-5", "La Salchipaperia", "Empresa Cliente"); 
 
 -- Proveedores
 INSERT INTO proveedores(fk_id_proveedor, fk_ti_proveedor, fk_empresa)  
 VALUES
-	("52965785", "ID02","E002"),
-	("1032458967", "ID01","E003"),
-	("45965784", "ID01","E004");
+	("52965785", "ID02", "E002"),
+	("1032458967", "ID01", "E003"),
+	("45965784", "ID01", "E004");
+select * from datos_persona where fk_tipo_persona = 'TP02';
 
---Clientes
+-- Clientes
 INSERT INTO clientes(fk_id_cliente, fk_ti_cliente, fk_empresa)
 VALUES
 	("103045685", "ID01", "E005"),
     ("204596855", "ID01", "E006"),
     ("635847596", "ID02", "E007");
+select * from datos_persona where fk_tipo_persona = 'TP03';
 
 -- Usuarios
 INSERT INTO usuarios(id_usuario, alias, contraseña, fk_id_empleado, fk_ti_empleado, estado_usuario) 
 VALUES 
 -- Encriptar Contraseña
-	("U001", "Contabilidad", aes_encrypt("C0nt4", 'user1'), "20654865", "ID01"),
-	("U002", "Operario", aes_encrypt("O123", 'user2') , "1007393654", "ID01"),
-    ("U003", "Jefe de Operaciones", aes_encrypt("J123O456",'user3'), "48456325", "ID01");
+	("U001", "Contabilidad", aes_encrypt("C0nt4", 'users'), "20654865", "ID01", 1),
+	("U002", "Operario", aes_encrypt("O123", 'users') , "1007393654", "ID01", 1),
+    ("U003", "Jefe de Operaciones", aes_encrypt("J123O456",'users'), "48456325", "ID01", 1);
+select * from datos_persona where fk_tipo_persona = 'TP01';
 
 -- Permisos
 INSERT INTO permisos(id_permiso, permiso_sistema)
@@ -114,22 +117,23 @@ VALUES
 -- Parafina	
 	("No Registra", 25, "TI01"), -- 1
 -- Rollo Carton	
-	("No Registra", 40, "TI03"); -- 2
+	("No Registra", 40, "TI03"), -- 2
 -- Papel
 	("PP3A0231046140", 215, "TI02"), -- 3
-	("PP3A0231049587", 210.5 , "TI02"), -- 4
-
+	("PP3A0231049587", 210.5 , "TI02"); -- 4
+select insumos.*, tipo_insumo.* from insumos inner join tipo_insumo on fk_tipo_insumo=id_tipo_insumo;
 -- I. Insumos
 INSERT INTO inventario_insumos (fk_insumo, fk_estado, unidades, fecha_planificada, fecha_registro, fk_proveedor, fk_ti_proveedor, fk_usuario, estado_registro) 
 VALUES 
 -- Papel
-	("1", "ES01", "2", "2023-12-07", now(), "3", "5", "1"),
-	("2", "ES02", "1", "2023-04-12", "2023-04-01", "1", "6", "1"),
+	("1", "ES01", "2", "2023-12-07", now(), "1032458967", "ID01", "U003", 1),
+	("2", "ES02", "1", "2023-04-12", "2023-04-01", "1032458967", "ID01", "U003", 1),
 -- Parafina
-	("3", "ES02", "10","2023-03-20","2023-03-08", "1", "4","1"),
+	("3", "ES02", "10","2023-03-20","2023-03-08", "52965785", "ID02","U003", 1),
 -- Rollo Carton
-	("4", "ES03", "20", "2019-01-01","2018-12-27","3","6", "0");
-
+	("4", "ES03", "20", "2019-01-01","2018-12-27","45965784","ID01", "U003", 1);
+select * from proveedores left join empresas on fk_empresa=id_empresa;
+SELECT * FROM usuarios;
 -- T. Producto
 INSERT INTO tipo_producto(tipo_producto) 
 VALUES 
