@@ -50,13 +50,13 @@ LEFT JOIN datos_persona dp ON fk_empleado = id_datos_persona;
 select u.alias, convert(aes_decrypt(contraseña, 'user3') using utf8mb3) as dato_desencriptado 
 from usuarios u;
 -- ----------------------------
-SELECT * FROM insumo;
+SELECT * FROM insumos;
 
 SELECT i.id_insumo,  -- insumo
 		ti.nombre_insumo as insumo,  -- tipo insumo
         i. consecutivo_insumo, i.peso_insumo -- insumo
 FROM tipo_insumo ti
-RIGHT JOIN insumo i ON fk_tipo_insumo = id_tipo_insumo;
+RIGHT JOIN insumos i ON fk_tipo_insumo = id_tipo_insumo;
 
 -- ----------------------------
 SELECT * FROM tipo_medidas;
@@ -136,7 +136,7 @@ SELECT ii.id_inventario_insumos as id, -- I. insumos
 		u.alias as usuario, -- usuarios
 		ii.estado_registro -- I. insumos
 FROM inventario_insumos ii
-JOIN insumo i ON fk_insumo = id_insumo LEFT JOIN tipo_insumo ti ON fk_tipo_insumo = id_tipo_insumo
+JOIN insumos i ON fk_insumo = id_insumo LEFT JOIN tipo_insumo ti ON fk_tipo_insumo = id_tipo_insumo
 JOIN estado e ON fk_estado = id_estado
 JOIN personas p ON fk_proveedor = id_persona LEFT JOIN empresas emp ON fk_empresa = id_empresa
 JOIN usuarios u ON fk_usuario = id_usuario;
@@ -153,7 +153,7 @@ FROM inventario_produccion ip
 JOIN producto p ON fk_producto = id_producto LEFT JOIN tipo_producto tp ON fk_tipo_producto = id_tipo_producto
 JOIN usuarios u ON fk_usuario = id_usuario;
 -- ----------------------------
-SELECT * FROM transacciones;
+SELECT * FROM transacciones_compras;
 	-- Transacciones de Compras (insumos)
 SELECT t.id_transacciones as id,  -- transacciones
 		tt.transaccion as tipo_transaccion,  -- tipo transaccion
@@ -164,10 +164,11 @@ SELECT t.id_transacciones as id,  -- transacciones
 FROM transacciones t
 JOIN tipo_transaccion tt ON fk_tipo_transaccion = id_tipo_transaccion
 JOIN tipo_documento td ON fk_tipo_documento = id_tipo_documento
-JOIN insumo i ON fk_articulo = id_insumo LEFT JOIN tipo_insumo ti ON fk_tipo_insumo = id_tipo_insumo
+JOIN insumos i ON fk_articulo = id_insumo LEFT JOIN tipo_insumo ti ON fk_tipo_insumo = id_tipo_insumo
 JOIN personas ON fk_persona = id_persona LEFT JOIN empresas e ON fk_empresa = id_empresa
 WHERE tt.transaccion LIKE 'Compra%';
 
+SELECT * FROM transacciones_ventas;
 	-- Transacciones de Ventas (Productos) 
 SELECT t.id_transacciones as id,  -- transacciones
 		tt.transaccion as tipo_transaccion,  -- tipo transaccion
