@@ -190,7 +190,7 @@ CREATE TABLE transacciones_ventas(
     fk_tipo_documento  int NOT NULL,
     fk_articulo int NOT NULL,
     fk_t_identi int NOT NULL, 
-    fk_persona varchar(15) NOT NULL, -- Cliente (9)
+    fk_cliente varchar(15) NOT NULL, -- Cliente (9)
     fecha_registro date NOT NULL,
     precio varchar(15) NOT NULL,
     comprobante varchar(150) NOT NULL, -- Enlace de la ruta donde guarde
@@ -198,7 +198,7 @@ CREATE TABLE transacciones_ventas(
     FOREIGN KEY (fk_tipo_transaccion) REFERENCES tipo_transaccion(id_tipo_transaccion),
     FOREIGN KEY (fk_tipo_documento) REFERENCES tipo_documento(id_tipo_documento),
     FOREIGN KEY (fk_articulo) REFERENCES productos(id_producto),
-    FOREIGN KEY (fk_t_identi, fk_persona) REFERENCES clientes(fk_ti_cliente, fk_id_cliente)
+    FOREIGN KEY (fk_t_identi, fk_cliente) REFERENCES clientes(fk_ti_cliente, fk_id_cliente)
 );
 
 CREATE TABLE transacciones_compras(
@@ -207,7 +207,7 @@ CREATE TABLE transacciones_compras(
     fk_tipo_documento  int NOT NULL,
     fk_articulo int NOT NULL,
     fk_t_identi int NOT NULL, 
-    fk_persona varchar(15) NOT NULL, -- Proveedor(9)
+    fk_proveedor varchar(15) NOT NULL, -- Proveedor(9)
     fecha_registro date NOT NULL,
     precio varchar(15) NOT NULL,
     comprobante varchar(150) NOT NULL, -- Enlace de la ruta donde guarde
@@ -215,7 +215,7 @@ CREATE TABLE transacciones_compras(
     FOREIGN KEY (fk_tipo_transaccion) REFERENCES tipo_transaccion(id_tipo_transaccion),
     FOREIGN KEY (fk_tipo_documento) REFERENCES tipo_documento(id_tipo_documento),
     FOREIGN KEY (fk_articulo) REFERENCES insumos(id_insumo),
-    FOREIGN KEY (fk_t_identi, fk_persona) REFERENCES proveedores (fk_ti_proveedor, fk_id_proveedor)
+    FOREIGN KEY (fk_t_identi, fk_proveedor) REFERENCES proveedores (fk_ti_proveedor, fk_id_proveedor)
 );
 
 
