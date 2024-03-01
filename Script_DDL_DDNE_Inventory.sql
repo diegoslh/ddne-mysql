@@ -166,7 +166,7 @@ CREATE TABLE cortes_jumbo(
     fecha_registro date NOT NULL,
     -- 2da Sección
     pfk_rollo_mediano int NOT NULL,
-    rollo_jumbo varchar(2) NOT NULL,
+    rollo_jumbo int NOT NULL,
     peso_jumbo decimal(6,2) NOT NULL,
     fk_color varchar(12) NOT NULL,
     fk_usuario int NOT NULL,
@@ -182,9 +182,9 @@ CREATE TABLE inventario_produccion(
     fecha_registro date NOT NULL,
     -- 3ra Sección
     fk_rollo_mediano int NOT NULL,
-    fk_rollo_jumbo varchar(2) NOT NULL, -- Se podría generar un unico espacio al concatenar ambos IDs
+    fk_rollo_jumbo int NOT NULL, -- Se podría generar un unico espacio al concatenar ambos IDs
     fk_producto int NOT NULL,
-    peso_producto varchar(5),
+    peso_producto decimal(6,2),
     fk_usuario int NOT NULL,
     estado_registro TINYINT NOT NULL,
 
