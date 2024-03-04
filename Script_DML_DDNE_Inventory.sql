@@ -65,15 +65,18 @@ INSERT INTO usuarios( alias, contraseña, fk_id_empleado, fk_ti_empleado, estado
 VALUES 
 -- Encriptar Contraseña
 	( "Admin", "$2b$10$ZwREz01eXuHnIBXgCM7EN.gCbMl7/zn3WzbgBlLa82jWS5konu1lC" , "1007393654", "CC", 1),
-  ( "J.operaciones", "$2b$10$ZwREz01eXuHnIBXgCM7EN.gCbMl7/zn3WzbgBlLa82jWS5konu1lC" , "48456325", "CC", 1);
+  ( "J.operaciones", "$2b$10$ZwREz01eXuHnIBXgCM7EN.gCbMl7/zn3WzbgBlLa82jWS5konu1lC" , "48456325", "CC", 1),
+  ( "Contabilidad", "$2b$10$ZwREz01eXuHnIBXgCM7EN.gCbMl7/zn3WzbgBlLa82jWS5konu1lC" , "20654865", "CC", 1);
 
 -- Permisos
 INSERT INTO permisos( permiso_sistema)
 VALUES 
+	("Insumos"), -- Ingresar al módulo de Inventarios
+	("Produccion"),
 	("Transacciones"), -- ingresar a la pagina de transacciones
-	("Inventarios"), -- Ingresar al módulo de Inventarios
-	("Contabilidad"), -- El modulo debe replantearse debido a que productos deberia tener acceso solo por medio de J.Operaciones y el informe de inventarios es una página en comun que se puede ver, por otro lado transacciones solo tiene acceso Contabilidad
-	("Proveedores"), -- Gestionar (Contabilidad)
+  ("Informes"), -- El modulo debe replantearse debido a que productos deberia tener acceso solo por medio de J.Operaciones y el informe de inventarios es una página en comun que se puede ver, por otro lado transacciones solo tiene acceso Contabilidad
+  ("Productos"),
+  ("Proveedores"), -- Gestionar (Contabilidad)
 	("Clientes"), -- Gestionar (Contabilidad)
 	("Usuarios"); -- Gestionar (Admon)
 
@@ -83,12 +86,21 @@ VALUES
 -- Admin
 	("1", "1"), 
 	("1", "2"),
-    ("1", "3"),
+  ("1", "3"),
 	("1", "4"),
 	("1", "5"),
 	("1", "6"),
+  ("1", "7"),
+  ("1", "8"),
 -- Jefe de Operaciones
-	("2", "2");
+	("2", "1"),
+  ("2", "3"),
+  ("2", "5"),
+-- Contabilidad
+  ("3", "2"),
+  ("3", "4"),
+  ("3", "6"),
+  ("3", "7");
 
 -- Estado
 INSERT INTO estado( tipo_estado) 
