@@ -42,6 +42,7 @@ CREATE TABLE proveedores(
     fk_id_proveedor varchar(15) NOT NULL,
     fk_ti_proveedor varchar(4) NOT NULL,
     fk_empresa varchar(20) NOT NULL,
+    estado_proveedor TINYINT NOT NULL,
     PRIMARY KEY (fk_ti_proveedor, fk_id_proveedor),
     FOREIGN KEY (fk_id_proveedor, fk_ti_proveedor) REFERENCES datos_persona(persona_id, fk_tipo_identificacion) ON UPDATE CASCADE,
     FOREIGN KEY (fk_empresa) REFERENCES empresas(nit) ON UPDATE CASCADE
@@ -52,6 +53,7 @@ CREATE TABLE clientes(
     fk_id_cliente varchar(15) NOT NULL,
     fk_ti_cliente varchar(4) NOT NULL,
     fk_empresa varchar(20) NOT NULL,
+    estado_cliente TINYINT NOT NULL,
     PRIMARY KEY (fk_ti_cliente, fk_id_cliente),
     FOREIGN KEY (fk_id_cliente, fk_ti_cliente) REFERENCES datos_persona(persona_id, fk_tipo_identificacion) ON UPDATE CASCADE,
     FOREIGN KEY (fk_empresa) REFERENCES empresas(nit) ON UPDATE CASCADE

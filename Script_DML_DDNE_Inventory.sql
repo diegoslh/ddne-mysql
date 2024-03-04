@@ -5,16 +5,16 @@
 -- Tipo de Identificación 
 INSERT INTO tipo_identificacion(tipo_id)
 VALUES  
-    ("CC"), 
+  ("CC"), 
 	("CE"), 
-    ("Otro"); 
+  ("Otro"); 
 
 -- Tipo Persona 
 INSERT INTO tipo_persona(tipo_persona) 
 VALUES 
 	("Empleado"), 
 	("Proveedor"), 
-    ("Cliente"); 
+  ("Cliente"); 
 
 -- Datos Persona 
 INSERT INTO datos_persona(persona_id, fk_tipo_identificacion, nombre_1, nombre_2, apellido_1, apellido_2, telefono, direccion, correo, fk_tipo_persona) 
@@ -29,8 +29,8 @@ VALUES
 	("45965784", "CC", "Juan", "Camilo", "Anzola", "Estrada", "3054218576", "Cr 92b # 11a - 20", "janzola@gmail.com", "Proveedor"), -- 6
 -- Clientes	
 	("103045685", "CC", "Jaime", "Miguel", "Orjuela", "Puente", "3226548567", "Cll 102 # 19 - 11", "jmiguelo@hotmail.com", "Cliente"), -- 7
-    ("204596855", "CC", "Julio", null, "Munevar", "Ortiz", "3012228547", "Av 19 # 109 - 02", "jmunevaro@outlook.com", "Cliente"), -- 8
-    ("635847596", "CE", "Claudio", "Manuel", "Cierafi", "Parrado", "314856932", "Cr 112 # 22sur - 17", "cmanuelc@gmail.com", "Cliente"); -- 9
+  ("204596855", "CC", "Julio", null, "Munevar", "Ortiz", "3012228547", "Av 19 # 109 - 02", "jmunevaro@outlook.com", "Cliente"), -- 8
+  ("635847596", "CE", "Claudio", "Manuel", "Cierafi", "Parrado", "314856932", "Cr 112 # 22sur - 17", "cmanuelc@gmail.com", "Cliente"); -- 9
 
 
 -- Empresas
@@ -40,25 +40,25 @@ VALUES
 	-- E. Proveedores
 	("80234698-4", "Solla S.A.S", "Proveedor de Parafina"), 
 	("10122012334-5", "Carvajal S.A.S", "Proveedor de Papel"), 
-    ("8088754621-3", "Propandina S.A.S", "Proveedor de Papel"), 
+  ("8088754621-3", "Propandina S.A.S", "Proveedor de Papel"), 
 	-- E. Clientes
 	("80234688-4", "Bogga Waffles", "Empresa Cliente"), 
-    ("2684596-2", "Restaurante El Ajillo", "Empresa Cliente"), 
-    ("90995264-5", "La Salchipaperia", "Empresa Cliente"); 
+  ("2684596-2", "Restaurante El Ajillo", "Empresa Cliente"), 
+  ("90995264-5", "La Salchipaperia", "Empresa Cliente"); 
 
 -- Proveedores
-INSERT INTO proveedores(fk_id_proveedor, fk_ti_proveedor, fk_empresa)  
+INSERT INTO proveedores(fk_id_proveedor, fk_ti_proveedor, fk_empresa, estado_proveedor)  
 VALUES
-	("52965785", "CE", "80234698-4"),
-	("1032458967", "CC", "10122012334-5"),
-	("45965784", "CC", "8088754621-3");
+	("52965785", "CE", "80234698-4", 1),
+	("1032458967", "CC", "10122012334-5", 1),
+	("45965784", "CC", "8088754621-3", 1);
 
 -- Clientes
-INSERT INTO clientes(fk_id_cliente, fk_ti_cliente, fk_empresa)
+INSERT INTO clientes(fk_id_cliente, fk_ti_cliente, fk_empresa, estado_cliente)
 VALUES
-	("103045685", "CC", "80234688-4"),
-    ("204596855", "CC", "2684596-2"),
-    ("635847596", "CE", "90995264-5");
+	("103045685", "CC", "80234688-4", 1),
+  ("204596855", "CC", "2684596-2", 1),
+  ("635847596", "CE", "90995264-5", 1);
 
 -- Usuarios
 INSERT INTO usuarios( alias, contraseña, fk_id_empleado, fk_ti_empleado, estado_usuario) 
@@ -366,7 +366,7 @@ VALUES
 INSERT INTO transacciones_compras(fk_tipo_transaccion, fk_tipo_documento, fk_articulo, fk_proveedor, fk_t_identi, fecha_registro, precio, comprobante) 
 VALUES 
 	("Compra", "Remisión", "Parafina", "52965785", "CE", curdate(), "623.200", "https://www.tuaplicacionweb.com/docs/ejemplo.pdf"),
-    ("Compra", "Factura", "Parafina", "52965785", "CE", curdate(), "623.200", "https://www.tuaplicacionweb.com/docs/ejemplo.pdf");
+  ("Compra", "Factura", "Parafina", "52965785", "CE", curdate(), "623.200", "https://www.tuaplicacionweb.com/docs/ejemplo.pdf");
 
 	-- Ventas
 INSERT INTO transacciones_ventas(fk_tipo_transaccion, fk_tipo_documento, fk_articulo, fk_cliente, fk_t_identi, fecha_registro, precio, comprobante) 
