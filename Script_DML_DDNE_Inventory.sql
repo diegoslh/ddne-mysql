@@ -136,10 +136,22 @@ VALUES
 	("Vinipel");
 
 -- Categorías
-INSERT INTO categorias(tipo_categoria) 
+-- INSERT INTO categorias(tipo_categoria) 
+-- VALUES
+-- 	("Papel Parafinado"),
+-- 	("Envoltura");
+
+-- Precios
+INSERT INTO precios(id_precios, peso,	medida, cantidad, precio) 
 VALUES
-	("Papel Parafinado"),
-	("Envoltura");
+	('30x40x100',	null, '30x40', '100', '30.000'),
+	('30x40x80',	null,	'30x40', '80', '30.000'),
+	('jumbo_kg',	'1',	null,	null,	'17.000'),
+	('roll_20',	null,	'20',	null, '20.000'),
+	('roll_50',	null,	'50',	null, '35.000'),
+	('roll_100',	null,	'100',	null, '70.000'),
+	('roll_200',	null,	'200',	null, '120.000'),
+	('roll_300',	null,	'300',	null, '175.000');
 
 -- Colores
 INSERT INTO colores(color) 
@@ -155,42 +167,42 @@ VALUES
 	("Custom");
 
 -- Producto 
-INSERT INTO productos(fk_tipo_producto, fk_categoria, fk_color, precio_producto, comentario) 
+INSERT INTO productos(fk_tipo_producto, fk_precio, fk_color, comentario) 
 VALUES 
 	-- Rollos Jumbo
-	("Jumbo", 1 , "Blanco", "215.000", null), -- 1
-	("Jumbo", 1 , "Rojo", "185.000", null), -- 2
+	("Jumbo", 'jumbo_kg' , "Blanco", null), -- 1
+	("Jumbo", 'jumbo_kg' , "Rojo", null), -- 2
 	-- Rollitos
-	("Rollito", 1 , "Verde", "100.000", null), -- 3
- 	("Rollito", 1 , "Rojo", "110.000", null), -- 4
- 	("Rollito", 1 , "Amarillo", "130.000", null), -- 5
+	("Rollito", 'roll_20' , "Verde", null), -- 3
+ 	("Rollito", 'roll_20' , "Rojo", null), -- 4
+ 	("Rollito", 'roll_20' , "Amarillo", null), -- 5
 	-- Resmas
-	("Resma", 1 , "Azul", "60.000", null), -- 6
-	("Resma", 1 , "Negro", "85.000", null), -- 7
-	("Resma", 1 , "Rojo", "85.000", null), -- 8
+	("Resma", '30x40x100' , "Azul", null), -- 6
+	("Resma", '30x40x100' , "Negro", null), -- 7
+	("Resma", '30x40x100' , "Rojo", null), -- 8
 	-- Vinipel
-	("Vinipel", 2 , "Transparente", "110.000", null), -- 9
+	("Vinipel", 'roll_20' , "Transparente", null), -- 9
 
 	-- Productos (continuación)
 	-- Rollos Jumbo
-	("Jumbo", 1 , "Custom","215.000", null), -- 10
-	("Jumbo", 1 , "Negro","215.000", null), -- 11
-	("Jumbo", 1 , "Verde","215.000", null), -- 12
-	("Jumbo", 1 , "Azul","215.000", null), -- 13
-	("Jumbo", 1 , "Amarillo","215.000", null), -- 14
-	("Jumbo", 1 , "Naranja","215.000", null), -- 15
+	("Jumbo", 'jumbo_kg' , "Custom", null), -- 10
+	("Jumbo", 'jumbo_kg' , "Negro", null), -- 11
+	("Jumbo", 'jumbo_kg' , "Verde", null), -- 12
+	("Jumbo", 'jumbo_kg' , "Azul", null), -- 13
+	("Jumbo", 'jumbo_kg' , "Amarillo", null), -- 14
+	("Jumbo", 'jumbo_kg' , "Naranja", null), -- 15
 	-- Rollitos
-	("Rollito", 1 , "Blanco", "100.000", null), -- 16
- 	("Rollito", 1 , "Custom", "110.000", null), -- 17
- 	("Rollito", 1 , "Azul", "130.000", null), -- 18
-	("Rollito", 1 , "Naranja", "110.000", null), -- 19
- 	("Rollito", 1 , "Negro", "130.000", null), -- 20
+	("Rollito", 'roll_20' , "Blanco",  null), -- 16
+ 	("Rollito", 'roll_20' , "Custom",  null), -- 17
+ 	("Rollito", 'roll_20' , "Azul",  null), -- 18
+	("Rollito", 'roll_20' , "Naranja",  null), -- 19
+ 	("Rollito", 'roll_20' , "Negro",  null), -- 20
 	-- Resmas
-	("Resma", 1 , "Blanco",  "60.000", null), -- 21
-	("Resma", 1 , "Custom", "85.000", null), -- 22
-	("Resma", 1 , "Amarillo", "85.000", null), -- 23
-	("Resma", 1 , "Naranja", "85.000", null), -- 24
-	("Resma", 1 , "Verde", "85.000", null); -- 25
+	("Resma", '30x40x80' , "Blanco",  null), -- 21
+	("Resma", '30x40x80' , "Custom", null), -- 22
+	("Resma", '30x40x80' , "Amarillo", null), -- 23
+	("Resma", '30x40x80' , "Naranja", null), -- 24
+	("Resma", '30x40x80' , "Verde", null); -- 25
 
 -- Alistamiento Rollos Medianos (Impresos)
 INSERT INTO rollos_medianos ( fecha_registro, fk_insumo, fk_color_1, fk_color_2, peso, fk_usuario, estado_registro)

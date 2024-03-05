@@ -118,13 +118,23 @@ CREATE TABLE inventario_insumos(
 
 CREATE TABLE tipo_producto(
     producto varchar(17) NOT NULL, -- Rollo Jumbo(11)
+    comentario varchar(45), -- para posibles medidas o especificaciones
     PRIMARY KEY(producto)
 );
 
-CREATE TABLE categorias(
-    id_categoria int AUTO_INCREMENT NOT NULL,
-    tipo_categoria varchar(20) NOT NULL, -- papel parafinado (16)
-    PRIMARY KEY (id_categoria)
+-- CREATE TABLE categorias(
+--     id_categoria int AUTO_INCREMENT NOT NULL,
+--     tipo_categoria varchar(20) NOT NULL, -- papel parafinado (16)
+--     PRIMARY KEY (id_categoria)
+-- );
+
+CREATE TABLE precios(
+    id_precios varchar(10) NOT NULL,
+    peso int,	
+    medida varchar(10),
+    cantidad int,
+    precio decimal(6,2) NOT NULL,
+    PRIMARY KEY (id_precios)
 );
 
 CREATE TABLE colores(
@@ -133,16 +143,15 @@ CREATE TABLE colores(
 );
 
 --   {id: 1, nombre: "Lápiz", precio: 2000, tipo: "Lápices", marca: "Pilot", colores: ["Negro", "Azul", "Rojo"]}
-CREATE TABLE productos( -- Propuesta de tabla productos
+CREATE TABLE productos(
     id_producto int NOT NULL AUTO_INCREMENT,
     fk_tipo_producto varchar(17) NOT NULL,
-    fk_categoria int NOT NULL, 
+    fk_precio varchar(10) NOT NULL, 
     fk_color varchar(12) NOT NULL,
-    precio_producto varchar(15), -- 10.200.200 (10)
     comentario varchar(45), -- para posibles medidas o especificaciones
     PRIMARY KEY (id_producto),
     FOREIGN KEY (fk_tipo_producto) REFERENCES tipo_producto(producto) ON UPDATE CASCADE,
-    FOREIGN KEY (fk_categoria) REFERENCES categorias(id_categoria) ON UPDATE CASCADE,
+    FOREIGN KEY (fk_precio) REFERENCES precios(id_precios) ON UPDATE CASCADE,
     FOREIGN KEY (fk_color) REFERENCES colores(color) ON UPDATE CASCADE
 );
 
