@@ -125,6 +125,7 @@ VALUES
 	-- Parafina
 	("Parafina", "N/A", 25, "10", "Recibido","2023-03-21", "2023-03-20", "2023-03-12", "52965785", "CE","2", 1),
 	-- Rollo Carton
+	("Rollo Carton", "N/A", 40, "10", "Recibido", "2023-06-25", "2023-07-01", "2023-06-01","45965784","CC", "2", 1),
 	("Rollo Carton", "N/A", 40, "30", "Cancelado", "2023-06-25", null, "2023-06-01","45965784","CC", "2", 1);
 
 -- T. Producto
@@ -377,12 +378,60 @@ VALUES
     -- Compras
 INSERT INTO transacciones_compras(fk_tipo_transaccion, fk_tipo_documento, fk_articulo, fk_proveedor, fk_t_identi, fecha_registro, precio, comprobante) 
 VALUES 
-	("Compra", "Remisión", "Parafina", "52965785", "CE", curdate(), "623.200", "https://www.tuaplicacionweb.com/docs/ejemplo.pdf"),
-  ("Compra", "Factura", "Parafina", "52965785", "CE", curdate(), "623.200", "https://www.tuaplicacionweb.com/docs/ejemplo.pdf");
+	("Compra", "Remisión", "Papel", "52965785", "CE", "2023-04-11", "623.200", "1710749744088-Soporte.pdf"),
+  ("Compra", "Factura", "Papel", "52965785", "CE", "2023-04-6", "623.200", "1710749744089-Soporte.pdf"),
+
+	("Compra", "Remisión", "Papel", "1032458967", "CC", "2023-05-9", "623.200", "1710749744086-Soporte.pdf"),
+  ("Compra", "Factura", "Papel", "1032458967", "CC", "2023-04-27", "623.200", "1710749744087-Soporte.pdf"),
+
+	("Compra", "Remisión", "Parafina", "52965785", "CE", "2023-03-20", "623.200", "1710749744084-Soporte.pdf"),
+  ("Compra", "Factura", "Parafina", "52965785", "CE", "2023-03-12", "623.200", "1710749744085-Soporte.pdf"),	
+
+	("Compra", "Remisión", "Rollo Carton", "1032458967", "CC", "2023-07-01", "623.200", "1710749744043-Soporte.pdf"),
+  ("Compra", "Factura", "Rollo Carton", "1032458967", "CC", "2023-06-01", "623.200", "1710749744044-Soporte.pdf")
+;
 
 	-- Ventas
 INSERT INTO transacciones_ventas(fk_tipo_transaccion, fk_tipo_documento, fk_articulo, fk_cliente, fk_t_identi, fecha_registro, precio, comprobante) 
 VALUES 
-	("Venta", "Factura", "Jumbo", "103045685", "CC", curdate(), "1.112.050", "https://www.tuaplicacionweb.com/images/ejemplo.jpg"),
-	("Venta", "Remisión", "Jumbo", "103045685", "CC", curdate(), "1.112.050", "https://www.tuaplicacionweb.com/images/ejemplo.jpg"),
-	("Venta", "Factura", "Rollito", "635847596", "CE", curdate(), "112.050", "https://www.tuaplicacionweb.com/images/ejemplo.jpg");
+	("Venta", "Factura", "Jumbo", "103045685", "CC", CURDATE(), "164.000", "1710749744365-Soporte.pdf"),
+	("Venta", "Remisión", "Jumbo", "103045685", "CC", CURDATE(), "164.000", "1710749744965-Soporte.pdf"),
+	
+	("Venta", "Factura", "Resma", "635847596", "CE", CURDATE(), "70.000", "1710749744365-Soporte.pdf"),
+	("Venta", "Remisión", "Resma", "635847596", "CE", CURDATE(), "70.000", "1710749744965-Soporte.pdf"),
+	
+	("Venta", "Factura", "Vinipel", "204596855", "CC", CURDATE(), "20.000", "1710749744365-Soporte.pdf"),
+	("Venta", "Remisión", "Vinipel", "204596855", "CC", CURDATE(), "20.000", "1710749744965-Soporte.pdf"),
+
+	("Venta", "Factura", "Resma", "103045685", "CC", CURDATE(), "70.000", "1710749744365-Soporte.pdf"),
+	("Venta", "Remisión", "Resma", "103045685", "CC", CURDATE(), "70.000", "1710749744965-Soporte.pdf"),
+
+	("Venta", "Factura", "Rollito", "204596855", "CC", CURDATE(), "60.000", "1710749744365-Soporte.pdf"),
+	("Venta", "Remisión", "Rollito", "204596855", "CC", CURDATE(), "60.000", "1710749744965-Soporte.pdf"),
+
+	("Venta", "Factura", "Jumbo", "103045685", "CC", CURDATE(), "164.000", "1710749744365-Soporte.pdf"),
+	("Venta", "Remisión", "Jumbo", "103045685", "CC", CURDATE(), "164.000", "1710749744965-Soporte.pdf"),
+
+	("Venta", "Factura", "Rollito", "635847596", "CE", CURDATE(), "75.000", "1710749744365-Soporte.pdf"),
+	("Venta", "Remisión", "Rollito", "635847596", "CE", CURDATE(), "75.000", "1710749744965-Soporte.pdf"),
+
+	("Venta", "Factura", "Resma", "103045685", "CC", CURDATE(), "70.000", "1710749744365-Soporte.pdf"),
+	("Venta", "Remisión", "Resma", "103045685", "CC", CURDATE(), "70.000", "1710749744965-Soporte.pdf"),
+
+	("Venta", "Factura", "Vinipel", "204596855", "CC", CURDATE(), "20.000", "1710749744365-Soporte.pdf"),
+	("Venta", "Remisión", "Vinipel", "204596855", "CC", CURDATE(), "20.000", "1710749744965-Soporte.pdf"),
+
+	("Venta", "Factura", "Jumbo", "103045685", "CC", CURDATE(), "164.000", "1710749744365-Soporte.pdf"),
+	("Venta", "Remisión", "Jumbo", "103045685", "CC", CURDATE(), "164.000", "1710749744965-Soporte.pdf"),
+
+	("Venta", "Factura", "Resma", "635847596", "CE", CURDATE(), "70.000", "1710749744365-Soporte.pdf"),
+	("Venta", "Remisión", "Resma", "635847596", "CE", CURDATE(), "70.000", "1710749744965-Soporte.pdf"),
+
+	("Venta", "Factura", "Rollito", "103045685", "CC", CURDATE(), "90.000", "1710749744365-Soporte.pdf"),
+	("Venta", "Remisión", "Rollito", "103045685", "CC", CURDATE(), "90.000", "1710749744965-Soporte.pdf"),
+
+	("Venta", "Factura", "Jumbo", "204596855", "CC", CURDATE(), "164.000", "1710749744365-Soporte.pdf"),
+	("Venta", "Remisión", "Jumbo", "204596855", "CC", CURDATE(), "164.000", "1710749744965-Soporte.pdf"),
+
+	("Venta", "Factura", "Resma", "103045685", "CC", CURDATE(), "70.000", "1710749744365-Soporte.pdf"),
+	("Venta", "Remisión", "Resma", "103045685", "CC", CURDATE(), "70.000", "1710749744965-Soporte.pdf");

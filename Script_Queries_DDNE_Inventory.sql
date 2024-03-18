@@ -22,8 +22,7 @@ SELECT *, (SELECT sum(peso_jumbo) FROM cortes_jumbo WHERE pfk_rollo_mediano=1) a
     SELECT rm.id_rollos_medianos, rm.peso FROM rollos_medianos rm where id_rollos_medianos = 1;
 
 SELECT * FROM inventario_produccion;
-SELECT ip.id_inv_produccion, ip.fecha_registro, ii.consecutivo_insumo, rm.peso as peso_inicial, concat(ip.fk_rollo_mediano, ip.fk_rollo_jumbo) as id_rollo_jumbo, p.fk_tipo_producto, p.fk_color, ip.peso_producto, (select peso_jumbo from cortes_jumbo where pfk_rollo_mediano=ip.fk_rollo_mediano and rollo_jumbo= ip.fk_rollo_jumbo) as peso_jumbo, u.alias, ip.fk_estado_registro FROM inventario_produccion ip INNER JOIN cortes_jumbo c ON fk_rollo_mediano = pfk_rollo_mediano and fk_rollo_jumbo = rollo_jumbo LEFT JOIN rollos_medianos rm ON fk_rollo_mediano = id_rollos_medianos INNER JOIN inventario_insumos ii ON fk_insumo = id_inventario_insumos JOIN productos p ON fk_producto = id_producto JOIN usuarios u ON ip.fk_usuario = id_usuario;
--- where ip.fk_rollo_mediano = 1 and ip.fk_rollo_jumbo = 1;
+SELECT ip.id_inv_produccion, ip.fecha_registro, ii.consecutivo_insumo, rm.peso as peso_inicial, concat(ip.fk_rollo_mediano, ip.fk_rollo_jumbo) as id_rollo_jumbo, p.fk_tipo_producto, p.fk_color, ip.peso_producto, (select peso_jumbo from cortes_jumbo where pfk_rollo_mediano=ip.fk_rollo_mediano and rollo_jumbo= ip.fk_rollo_jumbo) as peso_jumbo, u.alias, ip.estado_registro FROM inventario_produccion ip INNER JOIN cortes_jumbo c ON fk_rollo_mediano = pfk_rollo_mediano and fk_rollo_jumbo = rollo_jumbo LEFT JOIN rollos_medianos rm ON fk_rollo_mediano = id_rollos_medianos INNER JOIN inventario_insumos ii  ON fk_insumo = id_inventario_insumos JOIN productos p ON fk_producto = id_producto JOIN usuarios u ON ip.fk_usuario = id_usuario WHERE ip.estado_registro = 1 ORDER BY id_inv_produccion DESC;
 
 -- ---------------------------- TRANSACCIONES COMPRAS (insumos)
 SELECT * FROM tipo_documento;
