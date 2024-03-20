@@ -101,6 +101,18 @@ VALUES
   ("3", "6"),
   ("3", "7");
 
+-- T. Documento
+INSERT INTO tipo_documento(doc_transaccion) 
+VALUES 
+	("Factura"),
+	("Remisión");
+
+-- T. Transaccion
+INSERT INTO tipo_transaccion(tp_transaccion) 
+VALUES 
+	("Compra"),
+	("Venta");
+
 -- Estado
 INSERT INTO estado( tipo_estado) 
 VALUES 
@@ -114,27 +126,6 @@ VALUES
 	("Parafina"),
 	("Papel"),
 	("Rollo Carton");
-
--- I. Insumos
-INSERT INTO inventario_insumos (fk_tipo_insumo, consecutivo_insumo, peso_insumo, unidades, fk_estado, fecha_planificada, fecha_recepcion, fecha_registro, fk_proveedor, fk_ti_proveedor, fk_usuario, estado_registro) 
-VALUES 
-	-- Papel
-	("Papel", "PP3A0231046140", 220, "3", "Recibido", "2022-12-26", "2023-12-30", "2024-01-01", "1032458967", "CC", "2", 1),
-	( "Papel", "PP3A0231049587", 215, "3", "Recibido","2024-02-07", "2023-02-06", "2023-01-31", "1032458967", "CC", "2", 1),
-	-- Parafina
-	("Parafina", "N/A", 25, "10", "Recibido","2023-01-21", "2023-01-20", "2023-01-12", "52965785", "CE","2", 1),
-	-- Rollo Carton
-	("Rollo Carton", "N/A", 40, "10", "Recibido", "2023-01-25", "2023-02-01", "2023-02-01","45965784","CC", "2", 1),
-	("Rollo Carton", "N/A", 40, "30", "Cancelado", "2023-01-20", null, "2023-01-01","45965784","CC", "2", 1),
-	
-	-- Continuación Ejemplos
-	("Rollo Carton", "N/A", 40, "10", "Recibido", "2023-02-23", "2023-02-01", "2023-02-03","45965784","CC", "2", 1)
-	("Parafina", "N/A", 25, "5", "Recibido","2023-03-21", "2023-03-20", "2023-03-12", "52965785", "CE","2", 1),
-	("Papel", "PP3A0231046354", 210, "3", "Recibido", "2023-03-20", "2023-03-23", "2023-03-16", "1032458967", "CC", "2", 1),
-	("Parafina", "N/A", 25, "7", "Recibido","2023-03-21", "2023-03-20", "2023-03-17", "52965785", "CE","2", 1),
-	("Papel", "PP3A0231049357", 211, "3", "Recibido","2024-04-17", "2023-04-16", "2023-04-12", "1032458967", "CC", "2", 1),
-	("Rollo Carton", "N/A", 40, "10", "Recibido", "2023-06-25", "2023-07-01", "2023-06-01","45965784","CC", "2", 1);
-
 
 -- T. Producto
 INSERT INTO tipo_producto(producto) 
@@ -206,6 +197,62 @@ VALUES
 	("Resma", '30x40x80' , "Amarillo", null), -- 23
 	("Resma", '30x40x80' , "Naranja", null), -- 24
 	("Resma", '30x40x80' , "Verde", null); -- 25
+
+-- Transacciones
+    -- Compras
+INSERT INTO transacciones_compras(fk_tipo_transaccion, fk_tipo_documento, fk_articulo, fk_proveedor, fk_t_identi, fecha_registro, precio, comprobante) 
+VALUES 
+	("Compra", "Remisión", "Papel", "52965785", "CE", "2024-01-01", "220.200", "1710749744088-Soporte.pdf"),
+  ("Compra", "Factura", "Papel", "1032458967", "CC", "2023-01-31", "219.500", "1710749744087-Soporte.pdf"),
+  ("Compra", "Factura", "Parafina", "52965785", "CE", "2023-01-12", "1200.200", "1710749744085-Soporte.pdf"),	
+	("Compra", "Remisión", "Rollo Carton", "1032458967", "CC", "2023-02-01", "203.200", "1710749744043-Soporte.pdf"),
+	("Compra", "Remisión", "Rollo Carton", "1032458967", "CC", "2023-01-01", "203.200", "CANCELADO!"),
+
+  ("Compra", "Factura", "Rollo Carton", "1032458967", "CC", "2023-02-03", "213.200", "1710749744044-Soporte.pdf"),
+	("Compra", "Remisión", "Parafina", "52965785", "CE", "2023-03-12", "623.200", "1710749744084-Soporte.pdf"),
+  ("Compra", "Factura", "Papel", "52965785", "CE", "2023-03-16", "223.200", "1710749744089-Soporte.pdf"),
+	("Compra", "Factura", "Parafina", "52965785", "CE", "2023-03-17", "1223.200", "1710749744084-Soporte.pdf"),
+	("Compra", "Factura", "Papel", "52965785", "CE", "2023-04-12", "218.600", "1710749744089-Soporte.pdf"),
+	("Compra", "Remisión", "Rollo Carton", "1032458967", "CC", "2023-06-01", "203.200", "1710749744044-Soporte.pdf")
+;
+
+	-- Ventas
+INSERT INTO transacciones_ventas(fk_tipo_transaccion, fk_tipo_documento, fk_articulo, fk_cliente, fk_t_identi, fecha_registro, precio, comprobante) 
+VALUES 
+	("Venta", "Factura", "Jumbo", "103045685", "CC", CURDATE(), "164.000", "1710749744365-Soporte.pdf"),	
+	("Venta", "Factura", "Resma", "635847596", "CE", CURDATE(), "70.000", "1710749744365-Soporte.pdf"),	
+	("Venta", "Remisión", "Vinipel", "204596855", "CC", CURDATE(), "20.000", "1710749744965-Soporte.pdf"),
+	("Venta", "Factura", "Resma", "103045685", "CC", CURDATE(), "70.000", "1710749744365-Soporte.pdf"),
+	("Venta", "Factura", "Rollito", "204596855", "CC", CURDATE(), "60.000", "1710749744365-Soporte.pdf"),
+	("Venta", "Remisión", "Jumbo", "103045685", "CC", CURDATE(), "164.000", "1710749744965-Soporte.pdf"),
+	("Venta", "Remisión", "Rollito", "635847596", "CE", CURDATE(), "75.000", "1710749744965-Soporte.pdf"),
+	("Venta", "Factura", "Resma", "103045685", "CC", CURDATE(), "70.000", "1710749744365-Soporte.pdf"),
+	("Venta", "Remisión", "Vinipel", "204596855", "CC", CURDATE(), "20.000", "1710749744965-Soporte.pdf"),
+	("Venta", "Factura", "Jumbo", "103045685", "CC", CURDATE(), "164.000", "1710749744365-Soporte.pdf"),
+	("Venta", "Factura", "Resma", "635847596", "CE", CURDATE(), "70.000", "1710749744365-Soporte.pdf"),
+	("Venta", "Remisión", "Rollito", "103045685", "CC", CURDATE(), "90.000", "1710749744965-Soporte.pdf"),
+	("Venta", "Remisión", "Jumbo", "204596855", "CC", CURDATE(), "164.000", "1710749744965-Soporte.pdf"),
+	("Venta", "Remisión", "Resma", "103045685", "CC", CURDATE(), "70.000", "1710749744965-Soporte.pdf");
+
+-- I. Insumos
+INSERT INTO inventario_insumos (fk_n_transaccion, fk_tipo_insumo, consecutivo_insumo, peso_insumo, unidades, fk_estado, fecha_planificada, fecha_recepcion, fecha_registro, fk_proveedor, fk_ti_proveedor, fk_usuario, estado_registro) 
+VALUES 
+	-- Papel
+	( 1, "Papel", "PP3A0231046140", 220, "1", "Recibido", "2022-12-26", "2023-12-30", "2024-01-01", "1032458967", "CC", "2", 1),
+	( 2,  "Papel", "PP3A0231049587", 215, "1", "Recibido","2024-02-07", "2023-02-06", "2023-01-31", "1032458967", "CC", "2", 1),
+	-- Parafina
+	( 3, "Parafina", "N/A", 25, "2", "Recibido","2023-01-21", "2023-01-20", "2023-01-12", "52965785", "CE","2", 1),
+	-- Rollo Carton
+	( 4, "Rollo Carton", "N/A", 40, "10", "Recibido", "2023-01-25", "2023-02-01", "2023-02-01","45965784","CC", "2", 1),
+	( 5, "Rollo Carton", "N/A", 40, "30", "Cancelado", "2023-01-20", null, "2023-01-01","45965784","CC", "2", 1),
+	
+	-- Continuación Ejemplos
+	( 6, "Rollo Carton", "N/A", 40, "10", "Recibido", "2023-02-23", "2023-02-01", "2023-02-03","45965784","CC", "2", 1),
+	( 7, "Parafina", "N/A", 25, "1", "Recibido","2023-03-21", "2023-03-20", "2023-03-12", "52965785", "CE","2", 1),
+	( 8, "Papel", "PP3A0231046354", 210, "1", "Recibido", "2023-03-20", "2023-03-23", "2023-03-16", "1032458967", "CC", "2", 1),
+	( 9, "Parafina", "N/A", 25, "2", "Recibido","2023-03-21", "2023-03-20", "2023-03-17", "52965785", "CE","2", 1),
+	( 10, "Papel", "PP3A0231049357", 211, "1", "Recibido","2024-04-17", "2023-04-16", "2023-04-12", "1032458967", "CC", "2", 1),
+	( 11, "Rollo Carton", "N/A", 40, "10", "Recibido", "2023-06-25", "2023-07-01", "2023-06-01","45965784","CC", "2", 1);
 
 -- Alistamiento Rollos Medianos (Impresos)
 INSERT INTO rollos_medianos (fecha_registro, fk_insumo, fk_color_1, fk_color_2, peso, fk_usuario, estado_registro)
@@ -368,52 +415,3 @@ VALUES
 
 	-- Rollo Mediano/Impreso 4 --
 	("2023-01-08", 4, 1, 11, "200", "2", "1");
-
-
--- T. Documento
-INSERT INTO tipo_documento(doc_transaccion) 
-VALUES 
-	("Factura"),
-	("Remisión");
-
--- T. Transaccion
-INSERT INTO tipo_transaccion(tp_transaccion) 
-VALUES 
-	("Compra"),
-	("Venta");
-
--- Transacciones
-    -- Compras
-INSERT INTO transacciones_compras(fk_tipo_transaccion, fk_tipo_documento, fk_articulo, fk_proveedor, fk_t_identi, fecha_registro, precio, comprobante) 
-VALUES 
-	("Compra", "Remisión", "Papel", "52965785", "CE", "2024-01-01", "623.200", "1710749744088-Soporte.pdf"),
-  ("Compra", "Factura", "Papel", "1032458967", "CC", "2023-01-31", "623.200", "1710749744087-Soporte.pdf"),
-  ("Compra", "Factura", "Parafina", "52965785", "CE", "2023-01-12", "623.200", "1710749744085-Soporte.pdf"),	
-	("Compra", "Remisión", "Rollo Carton", "1032458967", "CC", "2023-02-01", "623.200", "1710749744043-Soporte.pdf"),
-	("Compra", "Remisión", "Rollo Carton", "1032458967", "CC", "2023-01-01", "623.200", "CANCELADO!"),
-
-  ("Compra", "Factura", "Rollo Carton", "1032458967", "CC", "2023-02-03", "623.200", "1710749744044-Soporte.pdf"),
-	("Compra", "Remisión", "Parafina", "52965785", "CE", "2023-03-12", "623.200", "1710749744084-Soporte.pdf"),
-  ("Compra", "Factura", "Papel", "52965785", "CE", "2023-03-16", "623.200", "1710749744089-Soporte.pdf"),
-	("Compra", "Factura", "Parafina", "52965785", "CE", "2023-03-17", "623.200", "1710749744084-Soporte.pdf"),
-	("Compra", "Factura", "Papel", "52965785", "CE", "2023-04-12", "623.200", "1710749744089-Soporte.pdf")
-	("Compra", "Remisión", "Rollo Carton", "1032458967", "CC", "2023-06-01", "623.200", "1710749744044-Soporte.pdf"),
-;
-
-	-- Ventas
-INSERT INTO transacciones_ventas(fk_tipo_transaccion, fk_tipo_documento, fk_articulo, fk_cliente, fk_t_identi, fecha_registro, precio, comprobante) 
-VALUES 
-	("Venta", "Factura", "Jumbo", "103045685", "CC", CURDATE(), "164.000", "1710749744365-Soporte.pdf"),	
-	("Venta", "Factura", "Resma", "635847596", "CE", CURDATE(), "70.000", "1710749744365-Soporte.pdf"),	
-	("Venta", "Remisión", "Vinipel", "204596855", "CC", CURDATE(), "20.000", "1710749744965-Soporte.pdf"),
-	("Venta", "Factura", "Resma", "103045685", "CC", CURDATE(), "70.000", "1710749744365-Soporte.pdf"),
-	("Venta", "Factura", "Rollito", "204596855", "CC", CURDATE(), "60.000", "1710749744365-Soporte.pdf"),
-	("Venta", "Remisión", "Jumbo", "103045685", "CC", CURDATE(), "164.000", "1710749744965-Soporte.pdf"),
-	("Venta", "Remisión", "Rollito", "635847596", "CE", CURDATE(), "75.000", "1710749744965-Soporte.pdf"),
-	("Venta", "Factura", "Resma", "103045685", "CC", CURDATE(), "70.000", "1710749744365-Soporte.pdf"),
-	("Venta", "Remisión", "Vinipel", "204596855", "CC", CURDATE(), "20.000", "1710749744965-Soporte.pdf"),
-	("Venta", "Factura", "Jumbo", "103045685", "CC", CURDATE(), "164.000", "1710749744365-Soporte.pdf"),
-	("Venta", "Factura", "Resma", "635847596", "CE", CURDATE(), "70.000", "1710749744365-Soporte.pdf"),
-	("Venta", "Remisión", "Rollito", "103045685", "CC", CURDATE(), "90.000", "1710749744965-Soporte.pdf"),
-	("Venta", "Remisión", "Jumbo", "204596855", "CC", CURDATE(), "164.000", "1710749744965-Soporte.pdf"),
-	("Venta", "Remisión", "Resma", "103045685", "CC", CURDATE(), "70.000", "1710749744965-Soporte.pdf");
