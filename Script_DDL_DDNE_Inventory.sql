@@ -25,6 +25,7 @@ CREATE TABLE datos_persona(
     direccion varchar(65) NOT NULL, -- transversal 112B norte # 202A - 90 int 20 apto 1104 (51)
     correo varchar(70) NOT NULL, -- diego_sebastian_ladino_hernandez@correo.udistrital.edu.co (57)
     fk_tipo_persona varchar(11) NOT NULL,
+    fecha_registro date NOT NULL,
     PRIMARY KEY(persona_id, fk_tipo_identificacion), -- Esta tabla tiene una llave primaria compuesta
     FOREIGN KEY (fk_tipo_identificacion) REFERENCES tipo_identificacion(tipo_id) ON UPDATE CASCADE,
     FOREIGN KEY (fk_tipo_persona) REFERENCES tipo_persona(tipo_persona) ON UPDATE CASCADE
@@ -97,6 +98,7 @@ CREATE TABLE tipo_insumo(
 
 CREATE TABLE inventario_insumos(
     id_inventario_insumos int NOT NULL AUTO_INCREMENT,
+    fk_n_transaccion  int NOT NULL,
     fk_tipo_insumo varchar(20) NOT NULL,
     consecutivo_insumo varchar(20) NOT NULL,-- PP3A0231046140(14)
     peso_insumo decimal(6,2), -- En Papel el peso que se ingresa es el del Rollo Grande, no el de cada rollo impreso y el peso de c/u se asigna en inventario producción
@@ -114,6 +116,7 @@ CREATE TABLE inventario_insumos(
     FOREIGN KEY (fk_estado) REFERENCES estado(tipo_estado) ON UPDATE CASCADE,
     FOREIGN KEY (fk_ti_proveedor, fk_proveedor) REFERENCES proveedores(fk_ti_proveedor, fk_id_proveedor) ON UPDATE CASCADE,
     FOREIGN KEY (fk_usuario) REFERENCES usuarios(id_usuario) -- Este Campo no se puede actualizar debido a que los usuarios no se eliminarán sino que solo se inhabilitarán.
+    FOREIGN KEY (fk_n_transaccion) REFERENCES transacciones_compras(id_transacciones)
 )AUTO_INCREMENT = 100;
 
 CREATE TABLE tipo_producto(
@@ -159,7 +162,6 @@ CREATE TABLE productos(
 CREATE TABLE rollos_medianos(
     id_rollos_medianos int NOT NULL AUTO_INCREMENT,
     fecha_registro date NOT NULL,   
-    -- 1ra Sección
     fk_insumo int NOT NULL,
     fk_color_1 varchar(12) NOT NULL,
     fk_color_2 varchar(12) NOT NULL,
@@ -175,7 +177,6 @@ CREATE TABLE rollos_medianos(
 
 CREATE TABLE cortes_jumbo(
     fecha_registro date NOT NULL,
-    -- 2da Sección
     pfk_rollo_mediano int NOT NULL,
     rollo_jumbo int NOT NULL,
     peso_jumbo decimal(6,2) NOT NULL,
@@ -191,7 +192,6 @@ CREATE TABLE cortes_jumbo(
 CREATE TABLE inventario_produccion(
     id_inv_produccion INT NOT NULL AUTO_INCREMENT,
     fecha_registro date NOT NULL,
-    -- 3ra Sección
     fk_rollo_mediano int NOT NULL,
     fk_rollo_jumbo int NOT NULL, -- Se podría generar un unico espacio al concatenar ambos IDs
     fk_producto int NOT NULL,
