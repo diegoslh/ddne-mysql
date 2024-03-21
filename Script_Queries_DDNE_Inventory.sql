@@ -53,7 +53,7 @@ SELECT * FROM datos_persona;
 SELECT * FROM proveedores;
 SELECT * FROM empresas;
 
-SELECT ti.tipo_id, dp.persona_id, dp.nombre_1, dp.apellido_1, dp.telefono, dp.correo, e.NIT, e.nombre_empresa, e.descripcion_empresa, dp.direccion FROM proveedores pr INNER JOIN datos_persona dp ON persona_id = fk_id_proveedor and fk_tipo_identificacion = fk_ti_proveedor LEFT JOIN tipo_identificacion ti ON tipo_id = fk_tipo_identificacion JOIN empresas e ON nit = fk_empresa;
+SELECT ti.tipo_id, dp.persona_id, dp.nombre_1, COALESCE(dp.nombre_2, '') AS nombre_2, dp.apellido_1, COALESCE(dp.apellido_2, '') AS apellido_2, dp.telefono, dp.correo, e.NIT, e.nombre_empresa, e.descripcion_empresa, dp.direccion FROM proveedores pr INNER JOIN datos_persona dp ON persona_id = fk_id_proveedor and fk_tipo_identificacion = fk_ti_proveedor LEFT JOIN tipo_identificacion ti ON tipo_id = fk_tipo_identificacion JOIN empresas e ON nit = fk_empresa;
 
 -- ----------------------------  USUARIOS - PERMISOS
 SELECT * FROM usuarios;

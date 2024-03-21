@@ -111,37 +111,41 @@ CREATE TABLE tipo_insumo(
 -- TABLAS PARA PRODUCTOS
 CREATE TABLE tipo_producto(
     producto varchar(17) NOT NULL, -- Rollo Jumbo(11)
-    comentario varchar(45), -- para posibles medidas o especificaciones
     PRIMARY KEY(producto)
 );
 
-CREATE TABLE precios(
+CREATE TABLE precios_productos(
     id_precios varchar(10) NOT NULL,
-    peso int,	
+    descripcion varchar(20) NOT NULL,
+    peso_kg int,	
     medida varchar(10),
     cantidad int,
-    precio decimal(6,2) NOT NULL,
+    precio decimal(6,3) NOT NULL,
     PRIMARY KEY (id_precios)
 );
 
-CREATE TABLE colores(
-    color varchar(12) NOT NULL, -- amarillo(8)
-    PRIMARY KEY (color)
-);
-
 --   {id: 1, nombre: "Lápiz", precio: 2000, tipo: "Lápices", marca: "Pilot", colores: ["Negro", "Azul", "Rojo"]}
+-- CREATE TABLE productos(
+    --     id_producto int NOT NULL AUTO_INCREMENT,
+    --     fk_tipo_producto varchar(17) NOT NULL,
+    --     fk_precio varchar(10) NOT NULL, 
+    --     fk_color varchar(12) NOT NULL,
+    --     comentario varchar(45), -- para posibles medidas o especificaciones
+    --     PRIMARY KEY (id_producto),
+    --     FOREIGN KEY (fk_tipo_producto) REFERENCES tipo_producto(producto) ON UPDATE CASCADE,
+    --     FOREIGN KEY (fk_precio) REFERENCES precios(id_precios) ON UPDATE CASCADE,
+    --     FOREIGN KEY (fk_color) REFERENCES colores(color) ON UPDATE CASCADE
+    -- );
+
 CREATE TABLE productos(
     id_producto int NOT NULL AUTO_INCREMENT,
     fk_tipo_producto varchar(17) NOT NULL,
     fk_precio varchar(10) NOT NULL, 
-    fk_color varchar(12) NOT NULL,
     comentario varchar(45), -- para posibles medidas o especificaciones
     PRIMARY KEY (id_producto),
     FOREIGN KEY (fk_tipo_producto) REFERENCES tipo_producto(producto) ON UPDATE CASCADE,
-    FOREIGN KEY (fk_precio) REFERENCES precios(id_precios) ON UPDATE CASCADE,
-    FOREIGN KEY (fk_color) REFERENCES colores(color) ON UPDATE CASCADE
+    FOREIGN KEY (fk_precio) REFERENCES precios_productos(id_precios) ON UPDATE CASCADE
 );
-
 
 -- --
 CREATE TABLE transacciones_compras(
@@ -203,6 +207,11 @@ CREATE TABLE inventario_insumos(
 
 
 -- TABLAS PARA INV-PRODUCCIÓN --
+CREATE TABLE colores(
+    color varchar(12) NOT NULL, -- amarillo(8)
+    PRIMARY KEY (color)
+);
+
 CREATE TABLE rollos_medianos(
     id_rollos_medianos int NOT NULL AUTO_INCREMENT,
     fecha_registro date NOT NULL,   
@@ -238,15 +247,17 @@ CREATE TABLE inventario_produccion(
     fecha_registro date NOT NULL,
     fk_rollo_mediano int NOT NULL,
     fk_rollo_jumbo int NOT NULL, -- Se podría generar un unico espacio al concatenar ambos IDs
+    fk_color varchar(12) NOT NULL,
     fk_producto int NOT NULL,
-    peso_producto decimal(6,2),
+    peso_producto decimal(6,2) NOT NULL,
     fk_usuario int NOT NULL,
     estado_registro TINYINT NOT NULL,
 
     PRIMARY KEY (id_inv_produccion),
     FOREIGN KEY (fk_rollo_mediano, fk_rollo_jumbo) REFERENCES cortes_jumbo(pfk_rollo_mediano, rollo_jumbo),
     FOREIGN KEY (fk_producto) REFERENCES productos(id_producto),
-    FOREIGN KEY (fk_usuario) REFERENCES usuarios(id_usuario)
+    FOREIGN KEY (fk_usuario) REFERENCES usuarios(id_usuario),
+    FOREIGN KEY (fk_color) REFERENCES colores(color) ON UPDATE CASCADE
 )AUTO_INCREMENT = 100;
 
 -- CREATE TABLE informe_produccion(
