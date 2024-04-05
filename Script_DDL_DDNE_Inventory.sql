@@ -25,6 +25,7 @@ CREATE TABLE datos_persona(
     direccion varchar(65) NOT NULL, -- transversal 112B norte # 202A - 90 int 20 apto 1104 (51)
     correo varchar(70) NOT NULL, -- diego_sebastian_ladino_hernandez@correo.udistrital.edu.co (57)
     fk_tipo_persona varchar(11) NOT NULL,
+    fecha_registro datetime NOT NULL,
     PRIMARY KEY(persona_id, fk_tipo_identificacion), -- Esta tabla tiene una llave primaria compuesta
     FOREIGN KEY (fk_tipo_identificacion) REFERENCES tipo_identificacion(tipo_id) ON UPDATE CASCADE,
     FOREIGN KEY (fk_tipo_persona) REFERENCES tipo_persona(tipo_persona) ON UPDATE CASCADE
@@ -85,134 +86,7 @@ CREATE TABLE usuario_permiso(
     FOREIGN KEY (fk_permiso) REFERENCES permisos(id_permiso) ON UPDATE CASCADE
 );
 
-CREATE TABLE estado(
-    tipo_estado varchar(12) NOT NULL, -- En Espera(9)
-    PRIMARY KEY (tipo_estado)
-);
-
-CREATE TABLE tipo_insumo(
-    nombre_insumo varchar(20) NOT NULL, -- Rollo Carton
-    PRIMARY KEY (nombre_insumo)
-);
-
-CREATE TABLE inventario_insumos(
-    id_inventario_insumos int NOT NULL AUTO_INCREMENT,
-    fk_tipo_insumo varchar(20) NOT NULL,
-    consecutivo_insumo varchar(20) NOT NULL,-- PP3A0231046140(14)
-    peso_insumo decimal(6,2), -- En Papel el peso que se ingresa es el del Rollo Grande, no el de cada rollo impreso y el peso de c/u se asigna en inventario producción
-    unidades int NOT NULL,
-    fk_estado  varchar(12) NOT NULL,
-    fecha_planificada date NOT NULL,
-    fecha_recepcion date,
-    fecha_registro date NOT NULL,
-    fk_proveedor varchar(15) NOT NULL, 
-    fk_ti_proveedor varchar(4) NOT NULL,
-    fk_usuario int NOT NULL,
-    estado_registro TINYINT NOT NULL,
-    PRIMARY KEY (id_inventario_insumos),
-    FOREIGN KEY (fk_tipo_insumo) REFERENCES tipo_insumo(nombre_insumo) ON UPDATE CASCADE,
-    FOREIGN KEY (fk_estado) REFERENCES estado(tipo_estado) ON UPDATE CASCADE,
-    FOREIGN KEY (fk_ti_proveedor, fk_proveedor) REFERENCES proveedores(fk_ti_proveedor, fk_id_proveedor) ON UPDATE CASCADE,
-    FOREIGN KEY (fk_usuario) REFERENCES usuarios(id_usuario) -- Este Campo no se puede actualizar debido a que los usuarios no se eliminarán sino que solo se inhabilitarán.
-)AUTO_INCREMENT = 100;
-
-CREATE TABLE tipo_producto(
-    producto varchar(17) NOT NULL, -- Rollo Jumbo(11)
-    comentario varchar(45), -- para posibles medidas o especificaciones
-    PRIMARY KEY(producto)
-);
-
--- CREATE TABLE categorias(
---     id_categoria int AUTO_INCREMENT NOT NULL,
---     tipo_categoria varchar(20) NOT NULL, -- papel parafinado (16)
---     PRIMARY KEY (id_categoria)
--- );
-
-CREATE TABLE precios(
-    id_precios varchar(10) NOT NULL,
-    peso int,	
-    medida varchar(10),
-    cantidad int,
-    precio decimal(6,2) NOT NULL,
-    PRIMARY KEY (id_precios)
-);
-
-CREATE TABLE colores(
-    color varchar(12) NOT NULL, -- amarillo(8)
-    PRIMARY KEY (color)
-);
-
---   {id: 1, nombre: "Lápiz", precio: 2000, tipo: "Lápices", marca: "Pilot", colores: ["Negro", "Azul", "Rojo"]}
-CREATE TABLE productos(
-    id_producto int NOT NULL AUTO_INCREMENT,
-    fk_tipo_producto varchar(17) NOT NULL,
-    fk_precio varchar(10) NOT NULL, 
-    fk_color varchar(12) NOT NULL,
-    comentario varchar(45), -- para posibles medidas o especificaciones
-    PRIMARY KEY (id_producto),
-    FOREIGN KEY (fk_tipo_producto) REFERENCES tipo_producto(producto) ON UPDATE CASCADE,
-    FOREIGN KEY (fk_precio) REFERENCES precios(id_precios) ON UPDATE CASCADE,
-    FOREIGN KEY (fk_color) REFERENCES colores(color) ON UPDATE CASCADE
-);
-
--- TABLAS PARA INV-PRODUCCIÓN --
-CREATE TABLE rollos_medianos(
-    id_rollos_medianos int NOT NULL AUTO_INCREMENT,
-    fecha_registro date NOT NULL,   
-    -- 1ra Sección
-    fk_insumo int NOT NULL,
-    fk_color_1 varchar(12) NOT NULL,
-    fk_color_2 varchar(12) NOT NULL,
-    peso decimal(6,2) NOT NULL,
-    fk_usuario int NOT NULL,
-    estado_registro TINYINT NOT NULL,
-
-    PRIMARY KEY (id_rollos_medianos),
-    FOREIGN KEY (fk_insumo) REFERENCES inventario_insumos(id_inventario_insumos),
-    FOREIGN KEY (fk_color_1) REFERENCES colores(color) ON UPDATE CASCADE,
-    FOREIGN KEY (fk_color_2) REFERENCES colores(color) ON UPDATE CASCADE
-);
-
-CREATE TABLE cortes_jumbo(
-    fecha_registro date NOT NULL,
-    -- 2da Sección
-    pfk_rollo_mediano int NOT NULL,
-    rollo_jumbo int NOT NULL,
-    peso_jumbo decimal(6,2) NOT NULL,
-    fk_color varchar(12) NOT NULL,
-    fk_usuario int NOT NULL,
-    estado_registro TINYINT NOT NULL,
-
-    FOREIGN KEY (pfk_rollo_mediano) REFERENCES rollos_medianos(id_rollos_medianos),
-    FOREIGN KEY (fk_color) REFERENCES colores(color) ON UPDATE CASCADE,
-    PRIMARY KEY (pfk_rollo_mediano, rollo_jumbo)
-);
-
-CREATE TABLE inventario_produccion(
-    id_inv_produccion INT NOT NULL AUTO_INCREMENT,
-    fecha_registro date NOT NULL,
-    -- 3ra Sección
-    fk_rollo_mediano int NOT NULL,
-    fk_rollo_jumbo int NOT NULL, -- Se podría generar un unico espacio al concatenar ambos IDs
-    fk_producto int NOT NULL,
-    peso_producto decimal(6,2),
-    fk_usuario int NOT NULL,
-    estado_registro TINYINT NOT NULL,
-
-    PRIMARY KEY (id_inv_produccion),
-    FOREIGN KEY (fk_rollo_mediano, fk_rollo_jumbo) REFERENCES cortes_jumbo(pfk_rollo_mediano, rollo_jumbo),
-    FOREIGN KEY (fk_producto) REFERENCES productos(id_producto),
-    FOREIGN KEY (fk_usuario) REFERENCES usuarios(id_usuario)
-)AUTO_INCREMENT = 100;
-
--- CREATE TABLE informe_produccion(
---     id_inf_produccion INT NOT NULL AUTO_INCREMENT,
---     peso_corte decimal(6,2) NOT NULL,
---     parafina_consumida decimal(6,2) NOT NULL,
-    
---     PRIMARY KEY (id_inf_produccion)
--- )
-
+-- TABLAS PARA TRANSACCIONES
 CREATE TABLE tipo_documento(
     doc_transaccion varchar(15) NOT NULL UNIQUE, -- Remisión(8)
     PRIMARY KEY (doc_transaccion)   
@@ -223,6 +97,57 @@ CREATE TABLE tipo_transaccion(
     PRIMARY KEY (tp_transaccion)
 );
 
+-- TABLAS PARA INVENTARIOS
+CREATE TABLE estado(
+    tipo_estado varchar(12) NOT NULL, -- En Espera(9)
+    PRIMARY KEY (tipo_estado)
+);
+
+CREATE TABLE tipo_insumo(
+    nombre_insumo varchar(20) NOT NULL, -- Rollo Carton
+    PRIMARY KEY (nombre_insumo)
+);
+
+-- TABLAS PARA PRODUCTOS
+CREATE TABLE tipo_producto(
+    producto varchar(17) NOT NULL, -- Rollo Jumbo(11)
+    PRIMARY KEY(producto)
+);
+
+CREATE TABLE precios_productos(
+    id_precios varchar(10) NOT NULL,
+    descripcion varchar(20) NOT NULL,
+    peso_kg int,	
+    medida varchar(10),
+    cantidad int,
+    precio decimal(6,3) NOT NULL,
+    PRIMARY KEY (id_precios)
+);
+
+--   {id: 1, nombre: "Lápiz", precio: 2000, tipo: "Lápices", marca: "Pilot", colores: ["Negro", "Azul", "Rojo"]}
+-- CREATE TABLE productos(
+    --     id_producto int NOT NULL AUTO_INCREMENT,
+    --     fk_tipo_producto varchar(17) NOT NULL,
+    --     fk_precio varchar(10) NOT NULL, 
+    --     fk_color varchar(12) NOT NULL,
+    --     comentario varchar(45), -- para posibles medidas o especificaciones
+    --     PRIMARY KEY (id_producto),
+    --     FOREIGN KEY (fk_tipo_producto) REFERENCES tipo_producto(producto) ON UPDATE CASCADE,
+    --     FOREIGN KEY (fk_precio) REFERENCES precios(id_precios) ON UPDATE CASCADE,
+    --     FOREIGN KEY (fk_color) REFERENCES colores(color) ON UPDATE CASCADE
+    -- );
+
+CREATE TABLE productos(
+    id_producto int NOT NULL AUTO_INCREMENT,
+    fk_tipo_producto varchar(17) NOT NULL,
+    fk_precio varchar(10) NOT NULL, 
+    comentario varchar(45), -- para posibles medidas o especificaciones
+    PRIMARY KEY (id_producto),
+    FOREIGN KEY (fk_tipo_producto) REFERENCES tipo_producto(producto) ON UPDATE CASCADE,
+    FOREIGN KEY (fk_precio) REFERENCES precios_productos(id_precios) ON UPDATE CASCADE
+);
+
+-- --
 CREATE TABLE transacciones_compras(
     id_transacciones int NOT NULL AUTO_INCREMENT,
     fk_tipo_transaccion varchar(10) NOT NULL,
@@ -256,3 +181,89 @@ CREATE TABLE transacciones_ventas(
     FOREIGN KEY (fk_articulo) REFERENCES tipo_producto(producto) ON UPDATE CASCADE,
     FOREIGN KEY (fk_t_identi, fk_cliente) REFERENCES clientes(fk_ti_cliente, fk_id_cliente) ON UPDATE CASCADE
 );
+
+CREATE TABLE inventario_insumos(
+    id_inventario_insumos int NOT NULL AUTO_INCREMENT,
+    fk_n_transaccion  int NOT NULL,
+    fk_tipo_insumo varchar(20) NOT NULL,
+    consecutivo_insumo varchar(20) NOT NULL,-- PP3A0231046140(14)
+    peso_insumo decimal(6,2), -- En Papel el peso que se ingresa es el del Rollo Grande, no el de cada rollo impreso y el peso de c/u se asigna en inventario producción
+    unidades int NOT NULL,
+    fk_estado  varchar(12) NOT NULL,
+    fecha_planificada date NOT NULL,
+    fecha_recepcion date,
+    fecha_registro date NOT NULL,
+    fk_proveedor varchar(15) NOT NULL, 
+    fk_ti_proveedor varchar(4) NOT NULL,
+    fk_usuario int NOT NULL,
+    estado_registro TINYINT NOT NULL,
+    PRIMARY KEY (id_inventario_insumos),
+    FOREIGN KEY (fk_tipo_insumo) REFERENCES tipo_insumo(nombre_insumo) ON UPDATE CASCADE,
+    FOREIGN KEY (fk_estado) REFERENCES estado(tipo_estado) ON UPDATE CASCADE,
+    FOREIGN KEY (fk_ti_proveedor, fk_proveedor) REFERENCES proveedores(fk_ti_proveedor, fk_id_proveedor) ON UPDATE CASCADE,
+    FOREIGN KEY (fk_usuario) REFERENCES usuarios(id_usuario), -- Este Campo no se puede actualizar debido a que los usuarios no se eliminarán sino que solo se inhabilitarán.
+    FOREIGN KEY (fk_n_transaccion) REFERENCES transacciones_compras(id_transacciones)
+)AUTO_INCREMENT = 100;
+
+
+-- TABLAS PARA INV-PRODUCCIÓN --
+CREATE TABLE colores(
+    color varchar(12) NOT NULL, -- amarillo(8)
+    PRIMARY KEY (color)
+);
+
+CREATE TABLE rollos_medianos(
+    id_rollos_medianos int NOT NULL AUTO_INCREMENT,
+    fecha_registro date NOT NULL,   
+    fk_insumo int NOT NULL,
+    fk_color_1 varchar(12) NOT NULL,
+    fk_color_2 varchar(12) NOT NULL,
+    peso decimal(6,2) NOT NULL,
+    fk_usuario int NOT NULL,
+    estado_registro TINYINT NOT NULL,
+
+    PRIMARY KEY (id_rollos_medianos),
+    FOREIGN KEY (fk_insumo) REFERENCES inventario_insumos(id_inventario_insumos),
+    FOREIGN KEY (fk_color_1) REFERENCES colores(color) ON UPDATE CASCADE,
+    FOREIGN KEY (fk_color_2) REFERENCES colores(color) ON UPDATE CASCADE
+);
+
+CREATE TABLE cortes_jumbo(
+    fecha_registro date NOT NULL,
+    pfk_rollo_mediano int NOT NULL,
+    rollo_jumbo int NOT NULL,
+    peso_jumbo decimal(6,2) NOT NULL,
+    fk_color varchar(12) NOT NULL,
+    fk_usuario int NOT NULL,
+    estado_registro TINYINT NOT NULL,
+
+    FOREIGN KEY (pfk_rollo_mediano) REFERENCES rollos_medianos(id_rollos_medianos),
+    FOREIGN KEY (fk_color) REFERENCES colores(color) ON UPDATE CASCADE,
+    PRIMARY KEY (pfk_rollo_mediano, rollo_jumbo)
+);
+
+CREATE TABLE inventario_produccion(
+    id_inv_produccion INT NOT NULL AUTO_INCREMENT,
+    fecha_registro date NOT NULL,
+    fk_rollo_mediano int NOT NULL,
+    fk_rollo_jumbo int NOT NULL, -- Se podría generar un unico espacio al concatenar ambos IDs
+    fk_color varchar(12) NOT NULL,
+    fk_producto int NOT NULL,
+    peso_producto decimal(6,2) NOT NULL,
+    fk_usuario int NOT NULL,
+    estado_registro TINYINT NOT NULL,
+
+    PRIMARY KEY (id_inv_produccion),
+    FOREIGN KEY (fk_rollo_mediano, fk_rollo_jumbo) REFERENCES cortes_jumbo(pfk_rollo_mediano, rollo_jumbo),
+    FOREIGN KEY (fk_producto) REFERENCES productos(id_producto),
+    FOREIGN KEY (fk_usuario) REFERENCES usuarios(id_usuario),
+    FOREIGN KEY (fk_color) REFERENCES colores(color) ON UPDATE CASCADE
+)AUTO_INCREMENT = 100;
+
+-- CREATE TABLE informe_produccion(
+--     id_inf_produccion INT NOT NULL AUTO_INCREMENT,
+--     peso_corte decimal(6,2) NOT NULL,
+--     parafina_consumida decimal(6,2) NOT NULL,
+    
+--     PRIMARY KEY (id_inf_produccion)
+-- )
