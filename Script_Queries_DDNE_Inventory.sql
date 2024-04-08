@@ -193,3 +193,8 @@ select * from permisos;
 select permiso_sistema from permisos;
 
 select * from tipo_identificacion;
+
+SELECT pd.*, pr.* FROM productos pd JOIN precios_productos pr ON pd.fk_precio = pr.id_precios;
+
+use database_ddne;
+select * from productos;

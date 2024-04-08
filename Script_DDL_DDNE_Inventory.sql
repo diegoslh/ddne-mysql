@@ -111,6 +111,8 @@ CREATE TABLE tipo_insumo(
 -- TABLAS PARA PRODUCTOS
 CREATE TABLE tipo_producto(
     producto varchar(17) NOT NULL, -- Rollo Jumbo(11)
+    descripcion varchar(250),
+    imagen varchar(100) NOT NULL,
     PRIMARY KEY(producto)
 );
 
