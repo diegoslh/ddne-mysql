@@ -126,3 +126,75 @@ UPDATE inventario_insumos SET fk_tipo_insumo = 'DatoNuevo', consecutivo_insumo =
 
 -- ACTUALIZACION PARA REGISTRO INV-PRODUCCCIÓN (No implica editar valores de las otras tablas)-------
 -- UPDATE SET WHERE ;
+
+SELECT tc.id_transacciones, tt.tp_transaccion, td.doc_transaccion, ti.nombre_insumo, e.nombre_empresa, e.descripcion_empresa, tc.fecha_registro, tc.precio, tc.comprobante, dt.persona_id, dt.fk_tipo_identificacion FROM transacciones_compras tc JOIN tipo_transaccion tt ON fk_tipo_transaccion = tp_transaccion JOIN tipo_documento td ON fk_tipo_documento = doc_transaccion JOIN tipo_insumo ti ON fk_articulo = nombre_insumo  JOIN proveedores p ON fk_proveedor = fk_id_proveedor JOIN datos_persona dt on persona_id = fk_proveedor LEFT JOIN empresas e ON fk_empresa = nit ORDER BY id_transacciones DESC;
+
+select * from datos_persona;
+-- '1032458967', 'CC', '10122012334-5', '1'
+
+SELECT tt.tp_transaccion, td.doc_transaccion, tp.producto, tv.precio, dt.persona_id 
+FROM transacciones_ventas tv 
+JOIN tipo_transaccion tt ON fk_tipo_transaccion = tp_transaccion 
+JOIN tipo_documento td ON fk_tipo_documento = doc_transaccion 
+JOIN tipo_producto tp ON fk_articulo = producto 
+JOIN clientes c ON fk_cliente = fk_id_cliente 
+JOIN datos_persona dt on persona_id = fk_id_cliente 
+LEFT JOIN empresas e ON fk_empresa = nit 
+ORDER BY id_transacciones DESC;
+
+select * from datos_persona;
+select * from transacciones_ventas;
+
+UPDATE transacciones_ventas AS tv
+JOIN tipo_transaccion AS tt ON tv.fk_tipo_transaccion = tt.tp_transaccion
+JOIN tipo_documento AS td ON tv.fk_tipo_documento = td.doc_transaccion
+JOIN tipo_producto AS tp ON tv.fk_articulo = tp.producto
+JOIN clientes AS c ON tv.fk_cliente = c.fk_id_cliente
+JOIN datos_persona AS dt ON c.persona_id = dt.persona_id
+LEFT JOIN empresas AS e ON c.fk_empresa = e.nit
+SET 
+    tv.doc_transaccion = 'Remisión',
+    tv.producto = 'Jumbo',
+    tv.precio = 3333,
+    dt.persona_id = '103045685'
+WHERE
+    tv.id_transacciones = 3;
+ 
+UPDATE transacciones_ventas
+SET
+	fk_tipo_documento = 'Remisión',
+    fk_articulo = 'Jumbo',
+    precio = 3333,
+    fk_cliente = '103045685',
+    fk_t_identi = 'CC'
+WHERE
+	id_transacciones = 3;
+ 
+    
+
+SELECT * FROM clientes WHERE fk_id_cliente = '103045685';
+SELECT * FROM proveedores;
+SELECT * FROM transacciones_compras;
+
+UPDATE transacciones_compras
+SET
+    fk_tipo_documento = 'Factura',
+    fk_articulo = 'Papel',
+    fk_proveedor = 45965784,
+    fk_t_identi = 'CC',
+	precio = '435353'
+WHERE
+	id_transacciones = 2;
+
+select * from usuarios;
+select * from usuario_permiso;
+select * from permisos;
+
+select permiso_sistema from permisos;
+
+select * from tipo_identificacion;
+
+SELECT pd.*, pr.* FROM productos pd JOIN precios_productos pr ON pd.fk_precio = pr.id_precios;
+
+use database_ddne;
+select * from productos;

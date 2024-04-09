@@ -141,12 +141,12 @@ VALUES
 ;
 
 -- T. Producto
-INSERT INTO tipo_producto(producto) 
+INSERT INTO tipo_producto(producto, imagen) 
 VALUES 
-	("Jumbo"),
-	("Rollito"),
-	("Resma"),
-	("Vinipel")
+	("Jumbo", "../assets/img/rollo.png"),
+	("Rollito", "../assets/img/rollito.png"),
+	("Resma", "../assets/img/resmas.png"),
+	("Vinipel", "../assets/img/vinipel.png")
 ;
 
 -- Precios
