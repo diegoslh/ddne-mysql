@@ -150,68 +150,30 @@ VALUES
 ;
 
 -- Precios
-INSERT INTO precios_productos(id_precios, descripcion, peso_kg,	medida, cantidad, precio) 
+INSERT INTO precios_productos(id_precios, descripcion, unidad_medida, peso_kg,	medida, cantidad, precio) 
 VALUES
   -- Resmas 📌
 
 	-- medida cantidad (N° hojas)
-	("30x30x100", "resma por hojas",	null, "30x30", 100, "30.000"),
-	("30x40x80", "resma por hojas",	null,	"30x40", 80, "35.000"),
-	("30x40x100", "resma por hojas",	null, "30x40", 100, "40.000"),
+	("30x30x100", "resma por hojas", "hjs",	null, "30x30", 100, "30.000"),
+	("30x40x80", "resma por hojas", "hjs",	null,	"30x40", 80, "35.000"),
+	("30x40x100", "resma por hojas", "hjs",	null, "30x40", 100, "40.000"),
 
 	-- medida peso(kg)
-	("30x30_kg", "resma por kg",	1, "30x30", null, "30.000"),
-	("30x40_kg", "resma por kg",	1,	"30x40", null, "30.000"),
+	("30x30_kg", "resma por kg", "kg",	1, "30x30", null, "28.000"),
+	("30x40_kg", "resma por kg", "kg",	1,	"30x40", null, "31.000"),
 	
 	-- Rollos 📌
 	-- peso por kg
-	("roll_kg", "rollo por kg",	"1",	null,	null,	"15.490"),
+	("roll_kg", "rollo por kg", "kg",	"1",	null,	null,	"15.490"),
 
 	-- medidas por mts
-	("roll_20",	"rollo por metro", null,	"20",	null, "14.000"),
-	("roll_50",	"rollo por metro", null,	"50",	null, "17.000"),
-	("roll_100", "rollo por metro", 	null,	"100",	null, "26.000"),
-	("roll_200", "rollo por metro", 	null,	"200",	null, "52.000"),
-	("roll_300", "rollo por metro", 	null,	"300",	null, "75.000")
+	("roll_20",	"rollo por metro", "mts", null,	"20",	null, "14.000"),
+	("roll_50",	"rollo por metro", "mts", null,	"50",	null, "17.000"),
+	("roll_100", "rollo por metro", "mts", 	null,	"100",	null, "26.000"),
+	("roll_200", "rollo por metro", "mts", 	null,	"200",	null, "52.000"),
+	("roll_300", "rollo por metro", "mts", 	null,	"300",	null, "75.000")
 ;
-
--- Producto 
--- INSERT INTO productos(fk_tipo_producto, fk_precio, fk_color, comentario) 
-	-- VALUES 
-	-- 	-- Rollos Jumbo
-	-- 	("Jumbo", "roll_kg" , "Blanco", null), -- 1
-	-- 	("Jumbo", "roll_kg" , "Rojo", null), -- 2
-	-- 	-- Rollitos
-	-- 	("Rollito", "roll_20" , "Verde", null), -- 3
-	--  	("Rollito", "roll_20" , "Rojo", null), -- 4
-	--  	("Rollito", "roll_20" , "Amarillo", null), -- 5
-	-- 	-- Resmas
-	-- 	("Resma", "30x40x100" , "Azul", null), -- 6
-	-- 	("Resma", "30x40x100" , "Negro", null), -- 7
-	-- 	("Resma", "30x40x100" , "Rojo", null), -- 8
-	-- 	-- Vinipel
-	-- 	("Vinipel", "roll_20" , "Transparente", null), -- 9
-
-	-- 	-- Productos (continuación)
-	-- 	-- Rollos Jumbo
-	-- 	("Jumbo", "roll_kg" , "Custom", null), -- 10
-	-- 	("Jumbo", "roll_kg" , "Negro", null), -- 11
-	-- 	("Jumbo", "roll_kg" , "Verde", null), -- 12
-	-- 	("Jumbo", "roll_kg" , "Azul", null), -- 13
-	-- 	("Jumbo", "roll_kg" , "Amarillo", null), -- 14
-	-- 	("Jumbo", "roll_kg" , "Naranja", null), -- 15
-	-- 	-- Rollitos
-	-- 	("Rollito", "roll_20" , "Blanco",  null), -- 16
-	--  	("Rollito", "roll_20" , "Custom",  null), -- 17
-	--  	("Rollito", "roll_20" , "Azul",  null), -- 18
-	-- 	("Rollito", "roll_20" , "Naranja",  null), -- 19
-	--  	("Rollito", "roll_20" , "Negro",  null), -- 20
-	-- 	-- Resmas
-	-- 	("Resma", "30x40x80" , "Blanco",  null), -- 21
-	-- 	("Resma", "30x40x80" , "Custom", null), -- 22
-	-- 	("Resma", "30x40x80" , "Amarillo", null), -- 23
-	-- 	("Resma", "30x40x80" , "Naranja", null), -- 24
-	-- 	("Resma", "30x40x80" , "Verde", null); -- 25
 
 INSERT INTO productos(fk_tipo_producto, fk_precio, comentario) 
 VALUES 
@@ -415,7 +377,7 @@ VALUES
     
 	("2023-01-03", 2, 2, "Custom", 11, "1.5", 2, 1),
 	("2023-01-03", 2, 2, "Custom", 11, "1.5", 2, 1),
-	("2023-01-03", 2, 2, "Custom", 11, "1.5", 2, 1),
+	("2023-01-03", 2, 2, "Custom", 11, "1", 2, 1),
 
 	("2023-01-03", 2, 3, "Rojo", 1, 15, 2, 1),
 
@@ -436,8 +398,8 @@ VALUES
 	("2023-01-04", 3, 1, "Custom", 1, 14, 2, 1),
 
 	("2023-01-04", 3, 2, "Custom", 10, 1, 2, 1),
-	("2023-01-04", 3, 2, "Custom", 10, 1, 2, 1),
-	("2023-01-04", 3, 2, "Custom", 10, 1, 2, 1),
+	("2023-01-04", 3, 2, "Custom", 11, 1, 2, 1),
+	("2023-01-04", 3, 2, "Custom", 11, 2, 2, 1),
 
 	("2023-01-04", 3, 3, "Custom", 3, 0, 2, 1),
 	("2023-01-04", 3, 3, "Custom", 3, 0, 2, 1),
